@@ -27,7 +27,7 @@ export default function RootLayout({
           }
         >
           <Header />
-          <main className="flex flex-col flex-1 basis-auto gap-8 row-start-2 items-center sm:items-start">
+          <main className="flex flex-col flex-1 basis-auto w-full gap-8 row-start-2 items-center sm:items-start ">
             {children}
           </main>
           <Footer />

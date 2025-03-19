@@ -6,14 +6,13 @@ interface CustomButtonProps extends ButtonProps {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   onClick: () => void;
+  weight: string;
+  fontsize: string;
 }
 
-const capitalizeFirstLetter = (text: string) => {
-  if (!text) return "";
-  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-};
-
 function CustomButton({
+  weight,
+  fontsize,
   label,
   leftIcon,
   rightIcon,
@@ -31,11 +30,12 @@ function CustomButton({
         textTransform: "none",
         background: "#46A358",
         color: "white",
-        fontWeight: 500,
+        fontWeight: weight,
         padding: "8px 17px",
+        fontSize: fontsize,
       }}
     >
-      {capitalizeFirstLetter(label)}
+      {label}
     </Button>
   );
 }
