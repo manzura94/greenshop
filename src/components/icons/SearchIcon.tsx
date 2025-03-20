@@ -1,4 +1,4 @@
-import search from "@/public/search.svg";
+import search from "@/public/svg/search.svg";
 import Image from "next/image";
 
 export const SearchIcon = () => (

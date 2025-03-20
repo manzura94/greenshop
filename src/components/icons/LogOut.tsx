@@ -1,4 +1,4 @@
-import logOut from "@/public/Logout.svg";
+import logOut from "@/public/svg/Logout.svg";
 import Image from "next/image";
 
 export const LogOut = () => (

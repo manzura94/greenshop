@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { Dispatch, SetStateAction } from "react";
-import logo from "@/public/LogoWord.svg";
+import logo from "@/public/svg/LogoWord.svg";
 import { Box } from "@mui/material";
 
 type Props = {

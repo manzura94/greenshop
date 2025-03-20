@@ -5,11 +5,17 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Box } from "@mui/material";
-import CustomButton from "../CustomDesigns/CustomButton";
+import CustomButton from "@/components/CustomDesigns/CustomButton";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
 const Carousel = () => {
+  const content =
+    " We are an online plant shop offering a wide range of cheap and trendy plants. Use our plants to create an unique Urban Jungle. Order your favorite plants!";
+
+  const shortContent =
+    "We are an online plant shop offering a wide range of cheap";
+
   return (
     <div className="w-full relative mx-auto mt-4 overflow-hidden max-w-full min-w-[320px]">
       <Swiper
@@ -26,42 +32,22 @@ const Carousel = () => {
         }}
       >
         {[1, 2, 3].map((num) => (
-          <SwiperSlide key={num} style={{ width: "100%" }}>
-            <Box
-              sx={{
-                display: "flex",
-                gap: { xs: "25px", md: "60px" },
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "30px",
-                background: "#f5f5f5",
-                padding: { xs: "24px 23px", md: "68px 43px" },
-                width: "100%",
-                minHeight: "100%",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "flex-start",
-                  flexDirection: "column",
-                  gap: "7px",
-                  width: "60%",
-                }}
-              >
-                <h4 className="text-[14px] xs:text-[10px] font-medium leading-[16px] xs:tracking-[0%] tracking-[10%]  text-[#3d3d3d]">
-                  {'WELCOME TO GREENSHOP'}
+          <SwiperSlide key={num} style={{ width: "100%", overflow: "hidden" }}>
+            <div className="flex items-center justify-center rounded-[30px] bg-[url('/images/bg-image.jpg')] bg-cover bg-center transition-all w-full px-[23px] py-[40px] md:px-[43px] md:py-[68px] bg-no-repeat ">
+              <div className="flex justify-start items-start flex-col gap-[7px] lg:w-[60%] sm:w-[60%] max-[640px]:w-[60%] max-[420px]:w-[90%]">
+                <h4 className="text-[14px] xs:text-[10px] font-medium leading-[16px] xs:tracking-[0%] tracking-[10%]  text-[#3d3d3d] font-cero">
+                  {"WELCOME TO GREENSHOP"}
                 </h4>
-                <h1 className="text-[clamp(24px,5vw,70px)] leading-[1.1] font-black text-[#3d3d3d]">
-                  {"LET'S MAKE A BETTER"}
+                <h1 className="font-cero text-[clamp(24px,5vw,70px)] leading-[1.1] font-black text-[#3d3d3d]">
+                  {"LET'S MAKE A BETTER "}
                   <span className="text-[#4CAF50]">{"PLANET"}</span>
                 </h1>
                 <p className="text-[14px] xs:text-[12px] font-normal xs:leading-[18px] leading-[24px] tracking-[0%] text-[#727272] ">
-                  We are an online plant shop offering a wide range of cheap
+                  <span className="hidden sm:block">{content}</span>
+                  <span className="block sm:hidden">{shortContent}</span>
                 </p>
 
-                <div className="lg:mt-[37px] md:[22px] xs:mt-[11px]">
+                <div className="lg:mt-[37px] md:[22px] xs:mt-[11px] hidden min-[870px]:block">
                   <CustomButton
                     fontsize="16px"
                     weight="700"
@@ -69,9 +55,14 @@ const Carousel = () => {
                     onClick={() => "click"}
                   />
                 </div>
-              </Box>
-              <div className=" w-[40%] xs:w-[30%]">
-                <div className="absolute  h-full w-full max-w-[500px]  top-[1%] ">
+                <div className="hidden max-[870px]:block ">
+                  <button className=" font-cera font-bold text-[12px] leading-[14px] tracking-[0%] uppercase text-[#46A358] pointer">
+                    SHOP NOW
+                  </button>
+                </div>
+              </div>
+              <div className=" w-[40%] xs:w-[30%] ">
+                <div className="absolute  h-full w-full max-w-[500px] min-w-[100px]  top-[1%] ">
                   <motion.div
                     initial={{ scale: 0.5 }}
                     animate={{ scale: 1 }}
@@ -79,6 +70,7 @@ const Carousel = () => {
                     className="absolute  bottom-0 left-0"
                   >
                     <Image
+                      priority
                       src="/flower1.png"
                       alt="Large Plant"
                       width={750}
@@ -102,7 +94,7 @@ const Carousel = () => {
                   </motion.div>
                 </div>
               </div>
-            </Box>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -126,8 +118,8 @@ const Carousel = () => {
           },
           "& .swiper-pagination-bullet-active": {
             backgroundColor: "#46A358",
-            width: "12px",
-            height: "12px",
+            width: "10px",
+            height: "10px",
           },
         }}
       />

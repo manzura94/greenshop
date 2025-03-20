@@ -1,5 +1,5 @@
 import React from "react";
-import burgerInside from "@/public/burgerInside.svg";
+import burgerInside from "@/public/svg/burgerInside.svg";
 
 import { Box, InputAdornment, TextField } from "@mui/material";
 import Image from "next/image";
