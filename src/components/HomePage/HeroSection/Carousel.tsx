@@ -67,15 +67,15 @@ const Carousel = () => {
                     initial={{ scale: 0.5 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.8 }}
-                    className="absolute  bottom-0 left-0"
+                    className="absolute  bottom-0 left-0 right-0 max-[520px]:bottom-2 max-[520px]:right-45"
                   >
                     <Image
                       priority
-                      src="/flower1.png"
+                      src="/images/flower1.png"
                       alt="Large Plant"
                       width={750}
                       height={750}
-                      className="opacity-100 w-[clamp(300px,38vw,750px)] h-auto right-10"
+                      className="opacity-100 w-[clamp(300px,38vw,750px)] h-auto "
                     />
                   </motion.div>
                   <motion.div
@@ -85,7 +85,7 @@ const Carousel = () => {
                     className="absolute bottom-3 left-5"
                   >
                     <Image
-                      src="/flower1.png"
+                      src="/images/flower1.png"
                       alt="Small Plant"
                       width={200}
                       height={200}

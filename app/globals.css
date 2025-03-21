@@ -12,6 +12,12 @@ body {
   /* sans-serif; */
 }
 
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
 html,
 body {
   overflow-x: hidden;
