@@ -5,7 +5,7 @@ const MobileMenu = () => {
   const [active, setActive] = useState<string>("Home");
 
   return (
-    <div className="fixed bottom-0 left-0 w-full flex mx-auto justify-center bg-white shadow-[0px_-4px_10px_rgba(0,0,0,0.1)] rounded-t-3xl shadow-2xl">
+    <div className="fixed bottom-0 left-0 w-full flex mx-auto justify-center bg-white shadow-[0px_-4px_10px_rgba(0,0,0,0.1)] rounded-t-3xl shadow-2xl z-[999]">
       <div className="relative w-full max-w-[870px] flex items-center justify-between px-6 py-4 rounded-t-3xl shadow-lg">
         <button
           className={
