@@ -1,34 +1,33 @@
-// import React from 'react';
+import * as React from "react";
 import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import Stack from "@mui/material/Stack";
 
 export default function Paginations() {
   return (
-    <Pagination
-      count={10}
-      renderItem={(item) => (
-        <PaginationItem
-          {...item}
-          sx={{
-            color: "#46A358",
+    <Stack
+      spacing={2}
+      sx={{
+        display: "flex",
+        alignItems: "flex-end",
+        width: "100%",
+        paddingTop: "40px",
+      }}
+    >
+      <Pagination
+        count={4}
+        shape="rounded"
+        sx={{
+          "& .MuiPaginationItem-root": {
             "&.Mui-selected": {
               backgroundColor: "#46A358",
-              color: "#fff",
+              color: "white",
               "&:hover": {
-                backgroundColor: "#3d8b40",
+                backgroundColor: "#46A358",
               },
             },
-            "&:hover": {
-              backgroundColor: "rgba(70, 163, 88, 0.1)",
-            },
-          }}
-          slots={{
-            previous: ChevronLeft,
-            next: ChevronRight,
-          }}
-        />
-      )}
-    />
+          },
+        }}
+      />
+    </Stack>
   );
 }

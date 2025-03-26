@@ -1,5 +1,6 @@
 import React from "react";
 import Categories from "./Categories";
+import Paginations from "./Paginations";
 import Plants from "./Plants";
 import Sorting from "./Sorting";
 
@@ -12,7 +13,7 @@ const ProductHome = () => {
       <div className="flex w-[75%] flex-col gap-[31px] max-[870px]:w-full">
         <Sorting />
         <Plants />
-        {/* <Paginations /> */}
+        <Paginations />
       </div>
     </div>
   );

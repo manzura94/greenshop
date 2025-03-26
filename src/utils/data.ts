@@ -120,3 +120,51 @@ export const plants = [
     price: "59.00",
   },
 ];
+
+export const blogs = [
+  {
+    id: 1,
+    image: "/images/blog1.png",
+    date: "September 12",
+    title: "Cactus & Succulent Care Tips",
+    text: "Cacti are succulents are easy care plants for any home or patio.",
+  },
+  {
+    id: 2,
+    image: "/images/blog2.png",
+    date: "September 13",
+    title: "Top 10 Succulents for Your Home",
+    text: "Best in hanging baskets. Prefers medium to high light.",
+  },
+  {
+    id: 3,
+    image: "/images/blog3.png",
+    date: "September 15",
+    title: "Cactus & Succulent Care Tips",
+    text: "Cacti and succulents thrive in containers and because most are..",
+  },
+  {
+    id: 4,
+    image: "/images/blog4.png",
+    date: "September 15",
+    title: "Best Houseplants Room by Room",
+    text: "The benefits of houseplants are endless. In addition to..",
+  },
+];
+
+export const info = [
+  {
+    id: 1,
+    title: "Summer cactus & succulents",
+    subtitle:
+      "We are an online plant shop offering a wide range of cheap and trendy plants",
+    image: "/images/flower5.png",
+  },
+  {
+    id: 2,
+    title: "Styling Trends & much more",
+    subtitle:
+      "We are an online plant shop offering a wide range of cheap and trendy plants",
+    image: "/images/flower4.png",
+  },
+];
