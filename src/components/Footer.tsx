@@ -3,6 +3,7 @@ import { footerInfo } from "@/utils/data";
 import Image from "next/image";
 import React from "react";
 import CustomButton from "./CustomDesigns/CustomButton";
+import { Calling, Location, Message } from "./icons";
 
 export default function Footer() {
   const handleJoinClick = () => {
@@ -56,7 +57,40 @@ export default function Footer() {
           </p>
         </div>
       </div>
-      <div></div>
+      <div className="py-[27px] p-[23px] bg-[#46A3581A] border-1 border-[#46a3593d] flex justify-between items-center w-full gap-[30px]">
+        <div>
+          <Image
+            src={"/svg/LogoWord.svg"}
+            height={35}
+            width={150}
+            alt={"logo-icon"}
+          />
+        </div>
+        <div className="flex justify-between items-cennter gap-1">
+          <span>
+            <Location />
+          </span>
+          <span className="font-cera text-[#3d3d3d] font-normal text-[14px] leading-[22px] tracking-[0]">
+            70 West Buckingham Ave. Farmingdale, NY 11735
+          </span>
+        </div>
+        <div className="flex justify-between items-cennter gap-1">
+          <span>
+            <Message />
+          </span>
+          <span className="font-cera text-[#3d3d3d] font-normal text-[14px] leading-[22px] tracking-[0]">
+            contact@greenshop.com
+          </span>
+        </div>
+        <div className="flex justify-between items-cennter gap-1">
+          <span>
+            <Calling />
+          </span>
+          <span className="font-cera text-[#3d3d3d] font-normal text-[14px] leading-[22px] tracking-[0]">
+            +88 01911 717 490
+          </span>
+        </div>
+      </div>
       <div></div>
       <div>© 2021 GreenShop. All Rights Reserved.</div>
     </div>
