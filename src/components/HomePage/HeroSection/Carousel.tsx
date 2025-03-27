@@ -28,7 +28,7 @@ const Carousel = () => {
           overflow: "hidden",
           width: "100%",
           maxWidth: "1200px",
-          minWidth: "320px",
+          minWidth: "280px",
         }}
       >
         {[1, 2, 3].map((num) => (

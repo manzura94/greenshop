@@ -168,3 +168,24 @@ export const info = [
     image: "/images/flower4.png",
   },
 ];
+
+export const footerInfo = [
+  {
+    id: 1,
+    title: "Garden Care",
+    text: "We are an online plant shop offering a wide range of cheap and trendy plants.",
+    image: "/images/footer1.png",
+  },
+  {
+    id: 2,
+    title: "Plant Renovation",
+    text: "We are an online plant shop offering a wide range of cheap and trendy plants.",
+    image: "/images/footer2.png",
+  },
+  {
+    id: 3,
+    title: "Watering Graden",
+    text: "We are an online plant shop offering a wide range of cheap and trendy plants.",
+    image: "/images/footer1.png",
+  },
+];

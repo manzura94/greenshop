@@ -18,10 +18,10 @@ export default function BlogPosts() {
             return (
               <div
                 key={item.id}
-                className={` max-w-[400px] bg-[#f5f5f5] shadow-lg rounded-lg h-full `}
+                className={` max-w-[400px] bg-[#f5f5f5]  h-[100%] w-full flex flex-col`}
               >
                 <div
-                  className={`overflow-hidden relative h-[clamp(240px,28vw,250px)] w-full 
+                  className={`overflow-hidden relative h-[clamp(220px,15vw,230px)] w-full 
                                 `}
                 >
                   <Image
@@ -32,7 +32,7 @@ export default function BlogPosts() {
                     className="rounded-t-lg"
                   />
                 </div>
-                <div className="p-4 flex flex-col gap-[4px]">
+                <div className="p-4 flex flex-col flex-1 ">
                   <span className="font-cera font-medium text-[14px] leading-[16px] tracking-[0] text-[#46A358]">
                     {item.date}
                   </span>
@@ -42,7 +42,7 @@ export default function BlogPosts() {
                   <p className="text-[#727272] font-cera font-normal text-[14px] leading-[22px] tracking-[0]">
                     {item.text}
                   </p>
-                  <button className="text-[#3D3D3D] font-cera font-medium text-[14px] leading-[16px] tracking-[0] pt-5 text-left">
+                  <button className="text-[#3D3D3D] font-cera font-medium text-[14px] leading-[16px] tracking-[0] pt-5 text-left mt-auto">
                     Read More
                   </button>
                 </div>
