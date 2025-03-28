@@ -1,11 +1,19 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import burgerInside from "@/public/svg/burgerInside.svg";
 
 import { Box, InputAdornment, TextField } from "@mui/material";
 import Image from "next/image";
 import { SearchIcon } from "../icons/index";
+import FilterDrawer from "../FilterDrawer";
 
 export default function MobileInput() {
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+    console.log("clicked");
+  };
   return (
     <div className="flex-center w-full gap-2.5">
       <Box sx={{ flex: "1", display: "flex", justifyContent: "center" }}>
@@ -42,7 +50,10 @@ export default function MobileInput() {
           }}
         />
       </Box>
-      <div className="bg-[#46A358] rounded-xl w-[50px] h-[50px] flex-center">
+      <div
+        onClick={toggleDrawer(true)}
+        className="bg-[#46A358] rounded-xl w-[50px] h-[50px] flex-center"
+      >
         <Image
           src={burgerInside}
           width={30}
@@ -50,6 +61,7 @@ export default function MobileInput() {
           alt={"filter button inside"}
         />
       </div>
+      <FilterDrawer open={open} toggleDrawer={toggleDrawer} />
     </div>
   );
 }

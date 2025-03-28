@@ -63,3 +63,11 @@ body {
 .button-text {
   @apply text-[#3D3D3D] font-medium text-[16px] leading-[16px] tracking-[0];
 }
+
+.text {
+  @apply font-normal text-[14px] leading-[30px] tracking-[0] text-[#3D3D3D];
+}
+
+.footer-title {
+  @apply font-bold text-[17px] leading-[16px] tracking-[0%] text-[#3D3D3D];
+}

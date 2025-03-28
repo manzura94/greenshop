@@ -1,16 +1,48 @@
 "use client";
-import { footerInfo } from "@/utils/data";
+import { footerInfo, footerMenu } from "@/utils/data";
 import Image from "next/image";
 import React from "react";
 import CustomButton from "./CustomDesigns/CustomButton";
-import { Calling, Location, Message } from "./icons";
+import {
+  Calling,
+  Facebook,
+  Instagram,
+  LinkedIn,
+  Location,
+  Message,
+  Twitter,
+  YouTube,
+} from "./icons";
+
+const contactIcons = [
+  {
+    id: 1,
+    icon: <Facebook />,
+  },
+  {
+    id: 2,
+    icon: <Instagram />,
+  },
+  {
+    id: 3,
+    icon: <Twitter />,
+  },
+  {
+    id: 4,
+    icon: <LinkedIn />,
+  },
+  {
+    id: 5,
+    icon: <YouTube />,
+  },
+];
 
 export default function Footer() {
   const handleJoinClick = () => {
     console.log("join");
   };
   return (
-    <div className="flex flex-col w-full h-full justify-center items-center mt-[100px] mb-[100px] ">
+    <div className="flex flex-col w-full h-full justify-center items-center mt-[100px] mb-[50px] ">
       <div className="bg-[#f5f5f5] p-[23px] py-[25px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[30px]">
         {footerInfo.map((item) => (
           <div key={item.id} className="flex flex-col gap-[10px] w-[100%] ">
@@ -24,18 +56,12 @@ export default function Footer() {
                 />
               </div>
             </div>
-            <h5 className="font-cera font-bold text-[17px] leading-[16px] tracking-[0] text-[#3D3D3D]">
-              {item.title}
-            </h5>
-            <p className="text-[#727272] font-cera font-normal text-[14px] leading-[22px] tracking-[0]">
-              {item.text}
-            </p>
+            <h5 className="footer-title">{item.title}</h5>
+            <p className="blog-text">{item.text}</p>
           </div>
         ))}
         <div className="flex flex-col gap-[18px] w-[100%] lg:col-span-2 md:col-span-2">
-          <h5 className="font-cera font-bold text-[17px] leading-[16px] tracking-[0] text-[#3D3D3D]">
-            Would you like to join newsletters?
-          </h5>
+          <h5 className="footer-title">Would you like to join newsletters?</h5>
           <div className="bg-[#FFFFFF] max-w-[350px] flex justify-between rounded-[6px]">
             <input
               type="email"
@@ -86,8 +112,48 @@ export default function Footer() {
           <span className="blog-text">+88 01911 717 490</span>
         </div>
       </div>
-      <div></div>
-      <div>{"© 2021 GreenShop. All Rights Reserved."}</div>
+      <div className="bg-[#f5f5f5] p-[23px] py-[33px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[30px] w-full">
+        {footerMenu.map((item) => (
+          <div key={item.id}>
+            <h5 className="footer-title pb-2">{item.title}</h5>
+            <ul className="flex flex-col">
+              {item.menu.map((el, index) => (
+                <li className="text cursor-pointer" key={index}>
+                  {el}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <div className="flex flex-col gap-7">
+          <div className="flex flex-col gap-4">
+            <h5 className="footer-title">{"Social Media"}</h5>
+            <div className="flex gap-2">
+              {contactIcons.map((item) => (
+                <span
+                  className="p-4 border border-[#46A35833] rounded-[6px] cursor-pointer flex-center first:pl-5 first:pr-5"
+                  key={item.id}
+                >
+                  {item.icon}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <h5 className="footer-title">{"We accept"}</h5>
+            <div>
+              <Image
+                width={200}
+                height={50}
+                alt="payment methods"
+                src={"/images/payments.png"}
+                className="mix-blend-multiply"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="text">{"© 2021 GreenShop. All Rights Reserved."}</div>
     </div>
   );
 }

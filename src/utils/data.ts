@@ -189,3 +189,33 @@ export const footerInfo = [
     image: "/images/footer1.png",
   },
 ];
+
+export const footerMenu = [
+  {
+    id: 1,
+    title: "My Account",
+    menu: ["My Account", "Our stores", "Contact us", "Career", "Specials"],
+  },
+  {
+    id: 2,
+    title: "Help & Guide",
+    menu: [
+      "Help Center",
+      "How to Buy",
+      "Shipping & Delivery",
+      "Product Policy",
+      "How to Return",
+    ],
+  },
+  {
+    id: 3,
+    title: "Categories",
+    menu: [
+      "House Plants",
+      "Potter Plants",
+      "Seeds",
+      "Small Plants",
+      "Accessories",
+    ],
+  },
+];
