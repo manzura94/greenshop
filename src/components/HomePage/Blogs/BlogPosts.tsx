@@ -4,13 +4,12 @@ import React from "react";
 
 export default function BlogPosts() {
   return (
-    <div className="flex flex-col justify-center items-center pt-[90px] gap-[15px] w-full">
-      <h2 className=" font-bold text-[30px] leading-[16px] tracking-[0%] text-[#3D3D3D]">
-        Our Blog Posts
-      </h2>
-      <p className="font-normal text-[14px] text-[#727272] leading-[24px] tracking-[0%] text-center">
-        We are an online plant shop offering a wide range of cheap and trendy
-        plants.{" "}
+    <div className="flex-center flex-col  pt-[90px] gap-4 w-full">
+      <h2 className="second-title">{"Our Blog Posts"}</h2>
+      <p className="subtitle text-center">
+        {
+          " We are an online plant shop offering a wide range of cheap and trendy plants. "
+        }
       </p>
       <div className="w-full mx-auto  ">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-6 w-full place-items-center ">
@@ -18,7 +17,7 @@ export default function BlogPosts() {
             return (
               <div
                 key={item.id}
-                className={` max-w-[400px] bg-[#f5f5f5]  h-[100%] w-full flex flex-col`}
+                className={` max-w-[400px] bg-[#f5f5f5]  h-full w-full flex flex-col`}
               >
                 <div
                   className={`overflow-hidden relative h-[clamp(220px,15vw,230px)] w-full 
@@ -33,16 +32,10 @@ export default function BlogPosts() {
                   />
                 </div>
                 <div className="p-4 flex flex-col flex-1 ">
-                  <span className="font-cera font-medium text-[14px] leading-[16px] tracking-[0] text-[#46A358]">
-                    {item.date}
-                  </span>
-                  <h4 className="text-[#3D3D3D] font-cera font-bold text-[20px] leading-[26px] tracking-[0]">
-                    {item.title}
-                  </h4>
-                  <p className="text-[#727272] font-cera font-normal text-[14px] leading-[22px] tracking-[0]">
-                    {item.text}
-                  </p>
-                  <button className="text-[#3D3D3D] font-cera font-medium text-[14px] leading-[16px] tracking-[0] pt-5 text-left mt-auto">
+                  <span className="green-text">{item.date}</span>
+                  <h4 className="blog-title">{item.title}</h4>
+                  <p className="blog-text">{item.text}</p>
+                  <button className="button-text cursor-pointer pt-5 text-left mt-auto">
                     Read More
                   </button>
                 </div>

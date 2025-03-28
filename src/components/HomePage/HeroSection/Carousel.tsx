@@ -17,7 +17,7 @@ const Carousel = () => {
     "We are an online plant shop offering a wide range of cheap";
 
   return (
-    <div className="w-full relative mx-auto mt-4 overflow-hidden max-w-full min-w-[320px]">
+    <div className="w-full relative mx-auto mt-4 overflow-hidden max-w-full min-w-[300px]">
       <Swiper
         modules={[Pagination, Autoplay]}
         spaceBetween={10}
@@ -28,14 +28,14 @@ const Carousel = () => {
           overflow: "hidden",
           width: "100%",
           maxWidth: "1200px",
-          minWidth: "280px",
+          minWidth: "300px",
         }}
       >
         {[1, 2, 3].map((num) => (
           <SwiperSlide key={num} style={{ width: "100%", overflow: "hidden" }}>
-            <div className="flex items-center justify-center rounded-[30px] bg-[url('/images/bg-image.jpg')] bg-cover bg-center transition-all w-full px-[23px] py-[40px] md:px-[43px] md:py-[68px] bg-no-repeat ">
-              <div className="flex justify-start items-start flex-col gap-[7px] lg:w-[60%] sm:w-[60%] max-[640px]:w-[60%] max-[420px]:w-[90%]">
-                <h4 className="text-[14px] xs:text-[10px] font-medium leading-[16px] xs:tracking-[0%] tracking-[10%]  text-[#3d3d3d] font-cero">
+            <div className="flex-center rounded-[30px] bg-[url('/images/bg-image.jpg')] bg-cover bg-center transition-all w-full px-[18px] p-[40px] md:px-[43px] md:p-[68px] bg-no-repeat ">
+              <div className="flex justify-start items-start flex-col gap-[7px] w-[60%] max-[420px]:w-[90%]">
+                <h4 className="text-[14px] xs:text-[10px] font-medium leading-[16px] xs:tracking-normal tracking-[10%]  text-[#3d3d3d]">
                   {"WELCOME TO GREENSHOP"}
                 </h4>
                 <h1 className="font-cero text-[clamp(24px,5vw,70px)] leading-[1.1] font-black text-[#3d3d3d]">
@@ -56,7 +56,7 @@ const Carousel = () => {
                   />
                 </div>
                 <div className="hidden max-[870px]:block ">
-                  <button className=" font-cera font-bold text-[12px] leading-[14px] tracking-[0%] uppercase text-[#46A358] pointer">
+                  <button className=" font-cera font-bold text-[12px] leading-[14px] tracking-[0%] text-[#46A358] pointer">
                     SHOP NOW
                   </button>
                 </div>

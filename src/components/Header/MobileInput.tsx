@@ -7,14 +7,7 @@ import { SearchIcon } from "../icons/index";
 
 export default function MobileInput() {
   return (
-    <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        gap: "10px",
-        alignSelf: "center",
-      }}
-    >
+    <div className="flex-center w-full gap-2.5">
       <Box sx={{ flex: "1", display: "flex", justifyContent: "center" }}>
         <TextField
           sx={{
@@ -49,24 +42,14 @@ export default function MobileInput() {
           }}
         />
       </Box>
-      <Box
-        sx={{
-          background: "#46A358",
-          borderRadius: "14px",
-          width: "50px",
-          height: "50px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <div className="bg-[#46A358] rounded-xl w-[50px] h-[50px] flex-center">
         <Image
           src={burgerInside}
           width={30}
           height={30}
           alt={"filter button inside"}
         />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

@@ -52,7 +52,7 @@ function Plants() {
             </div>
           </div>
           <div
-            className="bg-[#f5f5f5]   flex items-center justify-center
+            className="bg-[#f5f5f5]   flex-center
                      min-h-[200px] max-h-[300px] h-[38vw] relative md:rounded-none rounded-[20px]"
           >
             <Image
@@ -63,7 +63,7 @@ function Plants() {
             />
           </div>
           <div className="text-center mt-2 text-left ">
-            <p className="text-lg font-medium">{plant.name}</p>
+            <p className="button-text font-medium">{plant.name}</p>
             <span className="text-green-600 font-bold">${plant.price}</span>
           </div>
         </div>

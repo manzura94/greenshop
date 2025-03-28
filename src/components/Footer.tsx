@@ -10,7 +10,7 @@ export default function Footer() {
     console.log("join");
   };
   return (
-    <div className="flex flex-col w-full h-full justify-center items-center mt-[100px] ">
+    <div className="flex flex-col w-full h-full justify-center items-center mt-[100px] mb-[100px] ">
       <div className="bg-[#f5f5f5] p-[23px] py-[25px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[30px]">
         {footerInfo.map((item) => (
           <div key={item.id} className="flex flex-col gap-[10px] w-[100%] ">
@@ -49,16 +49,15 @@ export default function Footer() {
               onClick={handleJoinClick}
             />
           </div>
-          <p className="text-[#727272] font-cera font-normal text-[14px] leading-[22px] tracking-[0]">
-            We usually post offers and challenges in newsletter. We’re your
-            online houseplant destination. We offer a wide range of houseplants
-            and accessories shipped directly from our (green)house to
-            yours!{" "}
+          <p className="text-[#727272] blog-text">
+            {
+              "We usually post offers and challenges in newsletter. We’re your online houseplant destination. We offer a wide range of houseplants and accessories shipped directly from our (green)house to yours! "
+            }
           </p>
         </div>
       </div>
-      <div className="py-[27px] p-[23px] bg-[#46A3581A] border-1 border-[#46a3593d] flex justify-between items-center w-full gap-[30px]">
-        <div>
+      <div className="py-[27px] p-[23px] bg-[#46A3581A] border-1 border-[#46a3593d] flex flex-wrap justify-start items-center w-full gap-[30px] ">
+        <div className="min-w-[150px]">
           <Image
             src={"/svg/LogoWord.svg"}
             height={35}
@@ -66,33 +65,29 @@ export default function Footer() {
             alt={"logo-icon"}
           />
         </div>
-        <div className="flex justify-between items-cennter gap-1">
+        <div className="flex justify-between items-center gap-1 min-w-[150px]">
           <span>
             <Location />
           </span>
-          <span className="font-cera text-[#3d3d3d] font-normal text-[14px] leading-[22px] tracking-[0]">
+          <span className="blog-text">
             70 West Buckingham Ave. Farmingdale, NY 11735
           </span>
         </div>
-        <div className="flex justify-between items-cennter gap-1">
+        <div className="flex justify-between items-center gap-1 min-w-[150px]">
           <span>
             <Message />
           </span>
-          <span className="font-cera text-[#3d3d3d] font-normal text-[14px] leading-[22px] tracking-[0]">
-            contact@greenshop.com
-          </span>
+          <span className="blog-text ">contact@greenshop.com</span>
         </div>
-        <div className="flex justify-between items-cennter gap-1">
+        <div className="flex  items-center gap-1 min-w-[150px]">
           <span>
             <Calling />
           </span>
-          <span className="font-cera text-[#3d3d3d] font-normal text-[14px] leading-[22px] tracking-[0]">
-            +88 01911 717 490
-          </span>
+          <span className="blog-text">+88 01911 717 490</span>
         </div>
       </div>
       <div></div>
-      <div>© 2021 GreenShop. All Rights Reserved.</div>
+      <div>{"© 2021 GreenShop. All Rights Reserved."}</div>
     </div>
   );
 }

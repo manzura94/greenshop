@@ -32,10 +32,10 @@ export default function FindMore() {
           </div>
 
           <div className="w-[55%] flex flex-col justify-around items-end gap-2">
-            <h4 className="font-cerapro font-black text-[18px] leading-[24px] tracking-[0%] text-right uppercase text-[#3d3d3d] ">
+            <h4 className=" text-right uppercase findmore-title">
               {item.title}
             </h4>
-            <p className="font-cerapro font-normal text-[14px] leading-[clamp(20px, 2.3vw, 24px)] tracking-[0%] text-right text-[#727272]">
+            <p className="subtitle leading-[clamp(20px, 2.3vw, 24px)] text-right ">
               {item.subtitle}
             </p>
             <div className="w-full text-right">

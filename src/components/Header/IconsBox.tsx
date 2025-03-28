@@ -1,5 +1,4 @@
 import { Badge } from "@mui/material";
-import { Box } from "@mui/system";
 import React, { useState } from "react";
 import CustomButton from "../CustomDesigns/CustomButton";
 import { LogOut, SearchIcon, ShoppingCartIcon } from "../icons/index";
@@ -13,19 +12,19 @@ export default function IconsBox() {
   const router = useRouter();
 
   return (
-    <Box sx={{ display: "flex", alignItems: "center", gap: "30px" }}>
-      <Box sx={{ cursor: "pointer" }} onClick={() => setSearch(!search)}>
+    <div className="flex-center gap-[30px]">
+      <div className="cursor-pointer" onClick={() => setSearch(!search)}>
         <SearchIcon />
-      </Box>
-      <Box
-        sx={{ cursor: "pointer" }}
+      </div>
+      <div
+        className="cursor-pointer"
         onClick={() => router.push("/home/shoppingcart")}
       >
         <Badge badgeContent={6} color="success">
           <ShoppingCartIcon />
         </Badge>
-      </Box>
-      <Box>
+      </div>
+      <div>
         <CustomButton
           fontsize="16px"
           weight="500"
@@ -34,7 +33,7 @@ export default function IconsBox() {
           onClick={() => setOpen(true)}
         />
         <Login open={open} setOpen={setOpen} />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

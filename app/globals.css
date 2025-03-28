@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
@@ -8,8 +11,6 @@
 body {
   color: var(--foreground);
   box-sizing: border-box;
-  /* font-family: Cera Pro; */
-  /* sans-serif; */
 }
 
 button,
@@ -21,4 +22,44 @@ textarea {
 html,
 body {
   overflow-x: hidden;
+}
+
+.flex-center {
+  @apply flex justify-center items-center;
+}
+
+.second-title {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 16px;
+  letter-spacing: 0%;
+  color: #3d3d3d;
+}
+
+.subtitle {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: "clamp(20px, 2.3vw, 24px)";
+  letter-spacing: 0%;
+  color: #727272;
+}
+
+.findmore-title {
+  @apply font-black text-[18px] leading-[24px] tracking-[0%] text-[#3d3d3d];
+}
+
+.green-text {
+  @apply font-medium text-[14px] leading-[16px] tracking-[0] text-[#46A358];
+}
+
+.blog-title {
+  @apply text-[#3D3D3D] font-bold text-[20px] leading-[26px] tracking-[0];
+}
+
+.blog-text {
+  @apply text-[#727272] font-normal text-[14px] leading-[22px] tracking-[0];
+}
+
+.button-text {
+  @apply text-[#3D3D3D] font-medium text-[16px] leading-[16px] tracking-[0];
 }
