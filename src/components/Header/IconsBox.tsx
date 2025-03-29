@@ -4,11 +4,12 @@ import CustomButton from "../CustomDesigns/CustomButton";
 import { LogOut, SearchIcon, ShoppingCartIcon } from "../icons/index";
 import { useRouter } from "next/navigation";
 import { Login } from "./Login";
+import { useAppSelector } from "@/redux/store";
 
 export default function IconsBox() {
   const [search, setSearch] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
-
+  const cartCount = useAppSelector((state) => state.cart.items);
   const router = useRouter();
 
   return (
@@ -20,7 +21,7 @@ export default function IconsBox() {
         className="cursor-pointer"
         onClick={() => router.push("/home/shoppingcart")}
       >
-        <Badge badgeContent={6} color="success">
+        <Badge badgeContent={cartCount.length} color="success">
           <ShoppingCartIcon />
         </Badge>
       </div>

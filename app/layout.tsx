@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import { Header } from "@/components/Header/Header";
+import ReduxProvider from "@/contextProviders/ReduxProvider";
 
 import type { Metadata } from "next";
 import "./globals.css";
@@ -21,17 +22,19 @@ export default function RootLayout({
           "antialiased flex flex-col  items-center justify-items-center min-h-screen "
         }
       >
-        <div
-          className={
-            "max-w-[1200px] min-w-[360px] w-full mx-auto p-[15px] flex flex-col items-center min-h-screen"
-          }
-        >
-          <Header />
-          <main className="flex flex-col flex-1 basis-auto w-full gap-8 row-start-2 items-center sm:items-start ">
-            {children}
-          </main>
-          <Footer />
-        </div>
+        <ReduxProvider>
+          <div
+            className={
+              "max-w-[1200px] min-w-[360px] w-full mx-auto p-[15px] flex flex-col items-center min-h-screen"
+            }
+          >
+            <Header />
+            <main className="flex flex-col flex-1 basis-auto w-full gap-8 row-start-2 items-center sm:items-start ">
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </ReduxProvider>
       </body>
     </html>
   );
