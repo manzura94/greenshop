@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface ListItem {
+export interface ListItem {
   id: number;
   name: string;
   price: string;
