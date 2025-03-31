@@ -8,6 +8,10 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
+import { setSearchQuery } from "@/redux/searchSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { plants } from "@/utils/data";
 
 type Props = {
   anchorEl: HTMLElement | null;
@@ -21,14 +25,31 @@ export default function PopperInput({
   setSearchIsClicked,
 }: Props) {
   const [inputValue, setInputValue] = useState("");
+  const dispatch = useDispatch();
+  const searchQuery = useSelector((state: RootState) => state.search.query);
 
   const handleClose = () => {
     setAnchorEl(null);
     setSearchIsClicked(false);
+    setInputValue("");
+    dispatch(setSearchQuery(""));
   };
   const handleClear = () => {
     setInputValue("");
+    dispatch(setSearchQuery(""));
   };
+
+  const handleOnChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setInputValue(event.target.value);
+    dispatch(setSearchQuery(event.target.value));
+  };
+  console.log(searchQuery);
+
+  const searchResults = plants.filter((item) => {
+    return item.name.toLowerCase().includes(searchQuery.toLowerCase());
+  });
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popper" : undefined;
@@ -62,7 +83,7 @@ export default function PopperInput({
           fullWidth
           value={inputValue}
           autoComplete="off"
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => handleOnChange(e)}
           InputLabelProps={{
             sx: {
               color: "#46A358",
@@ -92,6 +113,19 @@ export default function PopperInput({
           }}
         />
       </Box>
+      {inputValue.length > 0 && (
+        <Box sx={{ px: 2, py: 1 }}>
+          {searchResults.length > 0 ? (
+            searchResults.map((item, index) => (
+              <p key={index} className="text cursor-pointer">
+                {item.name}
+              </p>
+            ))
+          ) : (
+            <p>No results found</p>
+          )}
+        </Box>
+      )}
     </Dialog>
   );
 }

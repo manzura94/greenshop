@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 const buttons = ["All Plants", "New arrivals", "Sale"];
 function Sorting() {
-  const [activeButton, setActiveButton] = useState("Home");
+  const [activeButton, setActiveButton] = useState("All Plants");
 
   const handleClick = (buttonName: string) => {
     setActiveButton(buttonName);

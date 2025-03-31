@@ -3,12 +3,16 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import cartReducer from "./cartSlice";
 import wishListReducer from "./wishListSlice";
 import productReducer from "./selectSlice";
+import searchReducer from "./searchSlice";
+import categoryReducer from "./categorySlice";
 
 export const store = configureStore({
   reducer: {
     cart: cartReducer,
     wishList: wishListReducer,
     product: productReducer,
+    search: searchReducer,
+    category: categoryReducer,
   },
 });
 

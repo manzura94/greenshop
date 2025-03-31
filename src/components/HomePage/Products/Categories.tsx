@@ -1,13 +1,22 @@
 "use client";
 import CustomButton from "@/components/CustomDesigns/CustomButton";
-import { categories, sizes } from "@/utils/data";
+import { setSelectCategory } from "@/redux/categorySlice";
+import { categories, plants, sizes } from "@/utils/data";
 import { Slider, Typography } from "@mui/material";
 
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 function Categories() {
   const [price, setPrice] = useState<number[]>([39, 300]);
   const [select, setSelect] = useState<string>("");
+  const dispatch = useDispatch();
+
+  const getSortedNumber = (name: string) => {
+    return plants.filter(
+      (item) => item.category.toLowerCase() === name.toLowerCase(),
+    ).length;
+  };
 
   const handlePriceChange = (_event: Event, newValue: number | number[]) => {
     setPrice(newValue as number[]);
@@ -15,6 +24,7 @@ function Categories() {
 
   const handleCategoryChange = (name: string) => {
     setSelect(name);
+    dispatch(setSelectCategory(name));
   };
 
   const handlePriceFilterClick = () => {
@@ -28,7 +38,7 @@ function Categories() {
           Categories
         </h4>
         <div className="w-full p-[12px] py-0">
-          {categories.map(({ name, count, id }) => (
+          {categories.map(({ name, id }) => (
             <button
               onClick={() => handleCategoryChange(name)}
               className={`cursor-pointer w-full flex items-center justify-between font-cera text-[15px] leading-[40px]  ${
@@ -39,7 +49,7 @@ function Categories() {
               key={id}
             >
               <span className="flex-1 text-left">{name}</span>
-              <span className="flex-shrink-0">{`(${count})`}</span>
+              <span className="flex-shrink-0">{getSortedNumber(name)}</span>
             </button>
           ))}
         </div>

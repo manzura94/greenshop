@@ -12,8 +12,8 @@ export default function MobileInput() {
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
-    console.log("clicked");
   };
+
   return (
     <div className="flex-center w-full gap-2.5">
       <Box sx={{ flex: "1", display: "flex", justifyContent: "center" }}>
