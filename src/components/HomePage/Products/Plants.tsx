@@ -1,6 +1,6 @@
 "use client";
 import { plants } from "@/utils/data";
-import React, { MouseEvent } from "react";
+import React, { MouseEvent, useState } from "react";
 import Image from "next/image";
 import { Like, SearchIcon, ShoppingCartIcon } from "@/components/icons";
 import Likegreen from "@/components/icons/Likegreen";
@@ -22,6 +22,7 @@ function Plants() {
   const router = useRouter();
   const cartItems = useAppSelector((state) => state.cart.items);
   const wishListItems = useAppSelector((state) => state.wishList.items);
+  const [searchIsClicked, setSearchIsClicked] = useState(false);
 
   const handleAddToCartClick = (
     e: MouseEvent<HTMLDivElement>,
@@ -39,6 +40,7 @@ function Plants() {
   const handleOnClick = (plant: PlantProps) => {
     router.push(`/home/shop/${plant.id}`);
     dispatch(setSelectedProduct(plant));
+    setSearchIsClicked(true);
   };
 
   const handleLikegreenClick = (
@@ -97,7 +99,7 @@ function Plants() {
               className="bg-white p-[5px]"
               onClick={() => handleOnClick(plant)}
             >
-              <SearchIcon />
+              <SearchIcon searchIsClicked={searchIsClicked} />
             </div>
           </div>
           <div

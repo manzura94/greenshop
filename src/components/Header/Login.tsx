@@ -22,6 +22,8 @@ export const Login = ({ open, setOpen }: ChildProps) => {
     <Dialog
       open={open}
       onClose={handleClose}
+      disableEnforceFocus={true}
+      disableScrollLock
       PaperProps={{
         style: {
           width: "500px",
