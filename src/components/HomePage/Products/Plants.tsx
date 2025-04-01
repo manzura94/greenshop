@@ -17,6 +17,8 @@ interface PlantProps {
   price: string;
   category: string;
   size: string;
+  isNew: boolean;
+  sale: boolean;
 }
 
 function Plants() {
@@ -26,7 +28,6 @@ function Plants() {
   const selectedCategory = useAppSelector(
     (state) => state.category.selectedCategory,
   );
-  const selectedSize = useAppSelector((state) => state.category.selectedSize);
   const wishListItems = useAppSelector((state) => state.wishList.items);
   const [searchIsClicked, setSearchIsClicked] = useState(false);
   const [products, setProducts] = useState(plants);
@@ -69,14 +70,12 @@ function Plants() {
     setTimeout(() => {
       if (selectedCategory && selectedCategory.length > 0) {
         setProducts(selectedCategory);
-      } else if (selectedSize && selectedSize.length > 0) {
-        setProducts(selectedSize);
       } else {
         setProducts(plants);
       }
       setLoading(false);
     }, 1000);
-  }, [selectedCategory, selectedSize]);
+  }, [selectedCategory]);
 
   return (
     <div

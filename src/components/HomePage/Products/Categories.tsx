@@ -1,6 +1,10 @@
 "use client";
 import CustomButton from "@/components/CustomDesigns/CustomButton";
-import { setSelectCategory, setSelectedSize } from "@/redux/categorySlice";
+import {
+  setPriceFilter,
+  setSelectCategory,
+  setSelectedSize,
+} from "@/redux/categorySlice";
 import { categories, plants, sizes } from "@/utils/data";
 import { Slider, Typography } from "@mui/material";
 
@@ -19,6 +23,7 @@ function Categories() {
   const getSortedNumber = (name: string) =>
     plants.filter((item) => item.category.toLowerCase() === name.toLowerCase())
       .length;
+  console.log(getSizeCount);
 
   const handlePriceChange = (_event: Event, newValue: number | number[]) => {
     setPrice(newValue as number[]);
@@ -30,7 +35,7 @@ function Categories() {
   };
 
   const handlePriceFilterClick = () => {
-    console.log(price);
+    dispatch(setPriceFilter(price));
   };
 
   const handleSizeSelect = (name: string) => {
@@ -55,7 +60,7 @@ function Categories() {
               key={id}
             >
               <span className="flex-1 text-left">{name}</span>
-              <span className="flex-shrink-0">{getSortedNumber(name)}</span>
+              <span className="flex-shrink-0">({getSortedNumber(name)})</span>
             </button>
           ))}
         </div>
@@ -114,7 +119,7 @@ function Categories() {
               key={id}
             >
               <span>{name}</span>
-              <span>{getSizeCount(name)}</span>
+              <span>({getSizeCount(name)})</span>
             </div>
           ))}
         </div>

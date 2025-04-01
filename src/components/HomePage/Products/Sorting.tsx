@@ -1,14 +1,32 @@
 "use client";
+import {
+  setSortingAll,
+  setSortingNew,
+  setSortingSale,
+} from "@/redux/categorySlice";
+import { plants } from "@/utils/data";
 import { Button } from "@mui/material";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const buttons = ["All Plants", "New arrivals", "Sale"];
 function Sorting() {
   const [activeButton, setActiveButton] = useState("All Plants");
+  const dispatch = useDispatch();
 
   const handleClick = (buttonName: string) => {
     setActiveButton(buttonName);
+    if (buttonName === "All Plants") {
+      dispatch(setSortingAll(plants));
+    }
+    if (buttonName === "New arrivals") {
+      dispatch(setSortingNew(plants));
+    }
+    if (buttonName === "Sale") {
+      dispatch(setSortingSale(plants));
+    }
   };
+
   return (
     <div className="flex justify-between">
       <div>

@@ -72,6 +72,8 @@ export const plants = [
     price: "129.00",
     category: "house plants",
     size: "small",
+    isNew: true,
+    sale: true,
   },
   {
     id: 2,
@@ -80,6 +82,8 @@ export const plants = [
     price: "119.00",
     category: "house plants",
     size: "small",
+    isNew: true,
+    sale: true,
   },
   {
     id: 3,
@@ -88,6 +92,8 @@ export const plants = [
     price: "39.00",
     category: "potter plants",
     size: "small",
+    isNew: true,
+    sale: true,
   },
   {
     id: 4,
@@ -96,6 +102,8 @@ export const plants = [
     price: "129.00",
     category: "potter plants",
     size: "medium",
+    isNew: true,
+    sale: true,
   },
   {
     id: 5,
@@ -104,6 +112,8 @@ export const plants = [
     price: "199.00",
     category: "succulents",
     size: "medium",
+    isNew: true,
+    sale: true,
   },
   {
     id: 6,
@@ -112,6 +122,8 @@ export const plants = [
     price: "139.00",
     category: "succulents",
     size: "medium",
+    isNew: false,
+    sale: false,
   },
   {
     id: 7,
@@ -120,6 +132,8 @@ export const plants = [
     price: "179.00",
     category: "trerrariums",
     size: "large",
+    isNew: false,
+    sale: false,
   },
   {
     id: 8,
@@ -128,6 +142,8 @@ export const plants = [
     price: "99.00",
     category: "trerrariums",
     size: "large",
+    isNew: false,
+    sale: false,
   },
   {
     id: 9,
@@ -136,6 +152,8 @@ export const plants = [
     price: "59.00",
     category: "house plants",
     size: "large",
+    isNew: false,
+    sale: false,
   },
 ];
 

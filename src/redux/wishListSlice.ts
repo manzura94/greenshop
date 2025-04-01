@@ -7,6 +7,8 @@ export interface ListItem {
   image: string;
   category: string;
   size: string;
+  isNew: boolean;
+  sale: boolean;
 }
 
 interface ListState {
