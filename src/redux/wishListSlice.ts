@@ -6,6 +6,7 @@ export interface ListItem {
   price: string;
   image: string;
   category: string;
+  size: string;
 }
 
 interface ListState {

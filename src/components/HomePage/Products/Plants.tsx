@@ -16,6 +16,7 @@ interface PlantProps {
   name: string;
   price: string;
   category: string;
+  size: string;
 }
 
 function Plants() {
@@ -25,6 +26,7 @@ function Plants() {
   const selectedCategory = useAppSelector(
     (state) => state.category.selectedCategory,
   );
+  const selectedSize = useAppSelector((state) => state.category.selectedSize);
   const wishListItems = useAppSelector((state) => state.wishList.items);
   const [searchIsClicked, setSearchIsClicked] = useState(false);
   const [products, setProducts] = useState(plants);
@@ -63,19 +65,18 @@ function Plants() {
   };
 
   useEffect(() => {
-    if (selectedCategory && selectedCategory.length > 0) {
-      setLoading(true);
-      setTimeout(() => {
-        const filteredProducts = plants.filter(
-          (plant) => plant.category === selectedCategory[0].category,
-        );
-        setProducts(filteredProducts);
-        setLoading(false);
-      }, 1000);
-    } else {
-      setProducts(plants);
-    }
-  }, [selectedCategory]);
+    setLoading(true);
+    setTimeout(() => {
+      if (selectedCategory && selectedCategory.length > 0) {
+        setProducts(selectedCategory);
+      } else if (selectedSize && selectedSize.length > 0) {
+        setProducts(selectedSize);
+      } else {
+        setProducts(plants);
+      }
+      setLoading(false);
+    }, 1000);
+  }, [selectedCategory, selectedSize]);
 
   return (
     <div

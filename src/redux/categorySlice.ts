@@ -4,10 +4,12 @@ import { ListItem } from "./wishListSlice";
 
 export interface CategoryState {
   selectedCategory: ListItem[];
+  selectedSize: ListItem[];
 }
 
 const initialState: CategoryState = {
   selectedCategory: [],
+  selectedSize: [],
 };
 
 const categorySlice = createSlice({
@@ -19,8 +21,13 @@ const categorySlice = createSlice({
         (item) => item.category.toLowerCase() === action.payload.toLowerCase(),
       );
     },
+    setSelectedSize: (state, action: PayloadAction<string>) => {
+      state.selectedCategory = plants.filter(
+        (item) => item.size.toLowerCase() === action.payload.toLowerCase(),
+      );
+    },
   },
 });
 
-export const { setSelectCategory } = categorySlice.actions;
+export const { setSelectCategory, setSelectedSize } = categorySlice.actions;
 export default categorySlice.reducer;

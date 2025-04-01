@@ -71,6 +71,7 @@ export const plants = [
     name: "Beach Spider Lily",
     price: "129.00",
     category: "house plants",
+    size: "small",
   },
   {
     id: 2,
@@ -78,6 +79,7 @@ export const plants = [
     name: "Barberton Daisy",
     price: "119.00",
     category: "house plants",
+    size: "small",
   },
   {
     id: 3,
@@ -85,6 +87,7 @@ export const plants = [
     name: "Angel Wing Begonia",
     price: "39.00",
     category: "potter plants",
+    size: "small",
   },
   {
     id: 4,
@@ -92,6 +95,7 @@ export const plants = [
     name: "Chinese Evergreen",
     price: "129.00",
     category: "potter plants",
+    size: "medium",
   },
   {
     id: 5,
@@ -99,6 +103,7 @@ export const plants = [
     name: "African Violet",
     price: "199.00",
     category: "succulents",
+    size: "medium",
   },
   {
     id: 6,
@@ -106,6 +111,7 @@ export const plants = [
     name: "Blushing Bromeliad",
     price: "139.00",
     category: "succulents",
+    size: "medium",
   },
   {
     id: 7,
@@ -113,6 +119,7 @@ export const plants = [
     name: "Aluminum Plant",
     price: "179.00",
     category: "trerrariums",
+    size: "large",
   },
   {
     id: 8,
@@ -120,6 +127,7 @@ export const plants = [
     name: "Bird's Nest Fern",
     price: "99.00",
     category: "trerrariums",
+    size: "large",
   },
   {
     id: 9,
@@ -127,6 +135,7 @@ export const plants = [
     name: "Broadleaf Lady Palm",
     price: "59.00",
     category: "house plants",
+    size: "large",
   },
 ];
 

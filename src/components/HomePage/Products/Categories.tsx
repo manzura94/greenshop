@@ -1,6 +1,6 @@
 "use client";
 import CustomButton from "@/components/CustomDesigns/CustomButton";
-import { setSelectCategory } from "@/redux/categorySlice";
+import { setSelectCategory, setSelectedSize } from "@/redux/categorySlice";
 import { categories, plants, sizes } from "@/utils/data";
 import { Slider, Typography } from "@mui/material";
 
@@ -12,11 +12,13 @@ function Categories() {
   const [select, setSelect] = useState<string>("");
   const dispatch = useDispatch();
 
-  const getSortedNumber = (name: string) => {
-    return plants.filter(
-      (item) => item.category.toLowerCase() === name.toLowerCase(),
-    ).length;
-  };
+  const getSizeCount = (name: string) =>
+    plants.filter((item) => item.size.toLowerCase() === name.toLowerCase())
+      .length;
+
+  const getSortedNumber = (name: string) =>
+    plants.filter((item) => item.category.toLowerCase() === name.toLowerCase())
+      .length;
 
   const handlePriceChange = (_event: Event, newValue: number | number[]) => {
     setPrice(newValue as number[]);
@@ -29,6 +31,10 @@ function Categories() {
 
   const handlePriceFilterClick = () => {
     console.log(price);
+  };
+
+  const handleSizeSelect = (name: string) => {
+    dispatch(setSelectedSize(name));
   };
 
   return (
@@ -101,13 +107,14 @@ function Categories() {
           Size
         </h4>
         <div className="w-full p-[12px] py-0">
-          {sizes.map(({ name, count, id }) => (
+          {sizes.map(({ name, id }) => (
             <div
-              className="w-full flex justify-between font-cera font-normal text-[15px] leading-[40px]"
+              onClick={() => handleSizeSelect(name)}
+              className="w-full cursor-pointer flex justify-between font-cera font-normal text-[15px] leading-[40px]"
               key={id}
             >
               <span>{name}</span>
-              <span>{`(${count})`}</span>
+              <span>{getSizeCount(name)}</span>
             </div>
           ))}
         </div>
