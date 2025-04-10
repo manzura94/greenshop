@@ -1,3 +1,4 @@
+"use client";
 import Carts from "@/components/ShoppingCart/Carts";
 import React from "react";
 

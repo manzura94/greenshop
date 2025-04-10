@@ -1,14 +1,15 @@
 "use client";
-import { plants } from "@/utils/data";
 import React, { MouseEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import { Like, SearchIcon, ShoppingCartIcon } from "@/components/icons";
 import Likegreen from "@/components/icons/Likegreen";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { addToCart, removeFromCart } from "@/redux/cartSlice";
-import { addToList, removeFromList } from "@/redux/wishListSlice";
+import { addToCart } from "@/redux/cartSlice";
+import { addToList } from "@/redux/wishListSlice";
 import { useRouter } from "next/navigation";
 import { setSelectedProduct } from "@/redux/selectSlice";
+import axios from "axios";
+import Loading from "@/components/Loading";
 
 interface PlantProps {
   id: number;
@@ -30,51 +31,83 @@ function Plants() {
   );
   const wishListItems = useAppSelector((state) => state.wishList.items);
   const [searchIsClicked, setSearchIsClicked] = useState(false);
-  const [products, setProducts] = useState(plants);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  console.log(wishListItems);
 
-  const handleAddToCartClick = (
+  const handleAddToCartClick = async (
     e: MouseEvent<HTMLDivElement>,
     product: PlantProps,
   ) => {
     e.stopPropagation();
+
     const isInCart = cartItems.some((item) => item.id === product.id);
-    if (isInCart) {
-      dispatch(removeFromCart(product.id));
-    } else {
-      dispatch(addToCart(product));
+
+    try {
+      let updatedCart;
+      if (isInCart) {
+        const res = await axios.delete("/api/users/1/cart?id=1", {
+          data: { productId: product.id },
+        });
+        updatedCart = res.data;
+      } else {
+        const res = await axios.post("/api/users/1/cart?id=1", {
+          productId: product.id,
+        });
+        updatedCart = res.data;
+      }
+
+      dispatch(addToCart(updatedCart));
+    } catch (error) {
+      console.error("Cart update failed:", error);
     }
   };
 
-  const handleOnClick = (plant: PlantProps) => {
+  const handleOnClick = async (plant: PlantProps) => {
     router.push(`/home/shop/${plant.id}`);
-    dispatch(setSelectedProduct(plant));
+    const res = await axios.get(`/api/products/${plant.id}`);
+    dispatch(setSelectedProduct(res.data));
     setSearchIsClicked(true);
+    console.log(res.data);
   };
 
-  const handleLikegreenClick = (
+  const handleLikegreenClick = async (
     e: MouseEvent<HTMLDivElement>,
     plant: PlantProps,
   ) => {
     e.stopPropagation();
     const isInList = wishListItems.some((item) => item.id === plant.id);
+    let updatedWishlist;
     if (isInList) {
-      dispatch(removeFromList(plant.id));
+      const res = await axios.delete("/api/users/1/wishlist?id=1", {
+        data: { productId: plant.id },
+      });
+      updatedWishlist = Array.isArray(res.data) ? res.data : [res.data];
     } else {
-      dispatch(addToList(plant));
+      const res = await axios.post("/api/users/1/wishlist?id=1", {
+        productId: plant.id,
+      });
+      updatedWishlist = Array.isArray(res.data) ? res.data : [res.data];
     }
+    dispatch(addToList(updatedWishlist));
   };
 
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      if (selectedCategory && selectedCategory.length > 0) {
-        setProducts(selectedCategory);
-      } else {
-        setProducts(plants);
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get("/api/products");
+        const data = res.data;
+
+        setProducts(data);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
-    }, 1000);
+    };
+
+    fetchProducts();
   }, [selectedCategory]);
 
   return (
@@ -83,10 +116,7 @@ function Plants() {
                    gap-4 w-full justify-center items-start flex-1"
     >
       {loading ? (
-        <div className="flex flex-col items-center justify-center w-full h-full col-span-full">
-          <div className="w-10 h-10 border-4 border-[#46A358] border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-gray-500 mt-2">Loading...</p>
-        </div>
+        <Loading />
       ) : products.length === 0 ? (
         <p className="text-center text-gray-500 col-span-full">
           No results found

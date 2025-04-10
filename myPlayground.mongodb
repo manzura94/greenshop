@@ -1,0 +1,201 @@
+// MongoDB Playground
+// To disable this template go to Settings | MongoDB | Use Default Template For Playground.
+// Make sure you are connected to enable completions and to be able to run a playground.
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// Select the database to use.
+use('greenshop-nextjs');
+
+// The drop() command destroys all data from a collection.
+// Make sure you run it against the correct database and collection.
+db.products.drop();
+
+
+db.products.insertMany([
+  {
+    "id": 1,
+    "image": "/images/flower10.png",
+    "name": "Beach Spider Lily",
+    "price": "129.00",
+    "category": "house plants",
+    "size": "small",
+    "isNew": true,
+    "sale": true
+  },
+  {
+    "id": 2,
+    "image": "/images/flower2.png",
+    "name": "Barberton Daisy",
+    "price": "119.00",
+    "category": "house plants",
+    "size": "small",
+    "isNew": true,
+    "sale": true
+  },
+  {
+    "id": 3,
+    "image": "/images/flower3.png",
+    "name": "Angel Wing Begonia",
+    "price": "39.00",
+    "category": "potter plants",
+    "size": "small",
+    "isNew": true,
+    "sale": true
+  },
+  {
+    "id": 4,
+    "image": "/images/flower4.png",
+    "name": "Chinese Evergreen",
+    "price": "129.00",
+    "category": "potter plants",
+    "size": "medium",
+    "isNew": true,
+    "sale": true
+  },
+  {
+    "id": 5,
+    "image": "/images/flower5.png",
+    "name": "African Violet",
+    "price": "199.00",
+    "category": "succulents",
+    "size": "medium",
+    "isNew": true,
+    "sale": true
+  },
+  {
+    "id": 6,
+    "image": "/images/flower6.png",
+    "name": "Blushing Bromeliad",
+    "price": "139.00",
+    "category": "succulents",
+    "size": "medium",
+    "isNew": false,
+    "sale": false
+  },
+  {
+    "id": 7,
+    "image": "/images/flower7.png",
+    "name": "Aluminum Plant",
+    "price": "179.00",
+    "category": "trerrariums",
+    "size": "large",
+    "isNew": false,
+    "sale": false
+  },
+  {
+    "id": 8,
+    "image": "/images/flower8.png",
+    "name": "Bird's Nest Fern",
+    "price": "99.00",
+    "category": "trerrariums",
+    "size": "large",
+    "isNew": false,
+    "sale": false
+  },
+  {
+    "id": 9,
+    "image": "/images/flower9.png",
+    "name": "Broadleaf Lady Palm",
+    "price": "59.00",
+    "category": "house plants",
+    "size": "large",
+    "isNew": false,
+    "sale": false
+  },
+  {
+    "id": 10,
+    "image": "/images/flower10.png",
+    "name": "Beach Spider Lily",
+    "price": "129.00",
+    "category": "house plants",
+    "size": "small",
+    "isNew": true,
+    "sale": true
+  },
+  {
+    "id": 11,
+    "image": "/images/flower2.png",
+    "name": "Barberton Daisy",
+    "price": "119.00",
+    "category": "house plants",
+    "size": "small",
+    "isNew": true,
+    "sale": true
+  },
+  {
+    "id": 12,
+    "image": "/images/flower3.png",
+    "name": "Angel Wing Begonia",
+    "price": "39.00",
+    "category": "potter plants",
+    "size": "small",
+    "isNew": true,
+    "sale": true
+  },
+  {
+    "id": 13,
+    "image": "/images/flower4.png",
+    "name": "Chinese Evergreen",
+    "price": "129.00",
+    "category": "potter plants",
+    "size": "medium",
+    "isNew": true,
+    "sale": true
+  },
+  {
+    "id": 14,
+    "image": "/images/flower5.png",
+    "name": "African Violet",
+    "price": "199.00",
+    "category": "succulents",
+    "size": "medium",
+    "isNew": true,
+    "sale": true
+  },
+  {
+    "id": 15,
+    "image": "/images/flower6.png",
+    "name": "Blushing Bromeliad",
+    "price": "139.00",
+    "category": "succulents",
+    "size": "medium",
+    "isNew": false,
+    "sale": false
+  },
+  {
+    "id": 16,
+    "image": "/images/flower7.png",
+    "name": "Aluminum Plant",
+    "price": "179.00",
+    "category": "trerrariums",
+    "size": "large",
+    "isNew": false,
+    "sale": false
+  },
+  {
+    "id": 17,
+    "image": "/images/flower8.png",
+    "name": "Bird's Nest Fern",
+    "price": "99.00",
+    "category": "trerrariums",
+    "size": "large",
+    "isNew": false,
+    "sale": false
+  },
+  {
+    "id": 18,
+    "image": "/images/flower9.png",
+    "name": "Broadleaf Lady Palm",
+    "price": "59.00",
+    "category": "house plants",
+    "size": "large",
+    "isNew": false,
+    "sale": false
+  }
+]);
+
+// db.products.find({});
+// db.products.find({ id: 1 });
+db.products.findOne({ id: 1 })
+
+
