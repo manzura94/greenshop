@@ -1,9 +1,9 @@
-import WishlistItems from '@/components/WishlistItems';
+import WishlistItems from "@/components/WishlistItems";
 
 export default function page() {
-    return (
-        <div>
-            <WishlistItems />
-        </div>
-    );
+  return (
+    <div>
+      <WishlistItems />
+    </div>
+  );
 }

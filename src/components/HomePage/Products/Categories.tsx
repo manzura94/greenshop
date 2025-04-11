@@ -1,12 +1,9 @@
 "use client";
 import CustomButton from "@/components/CustomDesigns/CustomButton";
-import {
-  setPriceFilter,
-  setSelectCategory,
-  setSelectedSize,
-} from "@/redux/categorySlice";
+import { setSelectCategory } from "@/redux/categorySlice";
 import { categories, plants, sizes } from "@/utils/data";
 import { Slider, Typography } from "@mui/material";
+import axios from "axios";
 
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -15,6 +12,22 @@ function Categories() {
   const [price, setPrice] = useState<number[]>([39, 300]);
   const [select, setSelect] = useState<string>("");
   const dispatch = useDispatch();
+
+  const applyFilters = async (body: {
+    category?: string;
+    size?: string;
+    priceRange?: number[];
+  }) => {
+    try {
+      const res = await axios.post("/api/products/filter", body);
+
+      const data = res.data;
+
+      dispatch(setSelectCategory(data.products));
+    } catch (error) {
+      console.error("Error fetching filtered products", error);
+    }
+  };
 
   const getSizeCount = (name: string) =>
     plants.filter((item) => item.size.toLowerCase() === name.toLowerCase())
@@ -30,16 +43,19 @@ function Categories() {
   };
 
   const handleCategoryChange = (name: string) => {
+    const categoryName = name.toLowerCase();
     setSelect(name);
-    dispatch(setSelectCategory(name));
+    applyFilters({ category: categoryName });
   };
 
   const handlePriceFilterClick = () => {
-    dispatch(setPriceFilter(price));
+    applyFilters({ priceRange: price });
   };
 
   const handleSizeSelect = (name: string) => {
-    dispatch(setSelectedSize(name));
+    const sizeName = name.toLowerCase();
+    setSelect(name);
+    applyFilters({ size: sizeName });
   };
 
   return (

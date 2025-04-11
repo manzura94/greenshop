@@ -1,8 +1,6 @@
 "use client";
 import {
-  setSortingAll,
-  setSortingNew,
-  setSortingSale,
+  setSelectCategory
 } from "@/redux/categorySlice";
 import { plants } from "@/utils/data";
 import { Button } from "@mui/material";
@@ -17,13 +15,13 @@ function Sorting() {
   const handleClick = (buttonName: string) => {
     setActiveButton(buttonName);
     if (buttonName === "All Plants") {
-      dispatch(setSortingAll(plants));
+      dispatch(setSelectCategory(plants));
     }
     if (buttonName === "New arrivals") {
-      dispatch(setSortingNew(plants));
+      dispatch(setSelectCategory(plants));
     }
     if (buttonName === "Sale") {
-      dispatch(setSortingSale(plants));
+      dispatch(setSelectCategory(plants));
     }
   };
 
