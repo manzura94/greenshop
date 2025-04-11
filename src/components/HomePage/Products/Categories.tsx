@@ -36,9 +36,10 @@ function Categories() {
   const getSortedNumber = (name: string) =>
     plants.filter((item) => item.category.toLowerCase() === name.toLowerCase())
       .length;
-  console.log(getSizeCount);
 
   const handlePriceChange = (_event: Event, newValue: number | number[]) => {
+    console.log(newValue);
+
     setPrice(newValue as number[]);
   };
 
@@ -48,8 +49,20 @@ function Categories() {
     applyFilters({ category: categoryName });
   };
 
-  const handlePriceFilterClick = () => {
-    applyFilters({ priceRange: price });
+  const handlePriceFilterClick = async () => {
+    const body = { priceRange: [30, 200] };
+
+    console.log(price);
+    try {
+      const res = await axios.post("/api/products/filter", body);
+
+      const data = res.data;
+      console.log("Filtered by price response:", data);
+
+      dispatch(setSelectCategory(data.products));
+    } catch (error) {
+      console.error("Price filter error:", error);
+    }
   };
 
   const handleSizeSelect = (name: string) => {
@@ -129,14 +142,18 @@ function Categories() {
         </h4>
         <div className="w-full p-[12px] py-0">
           {sizes.map(({ name, id }) => (
-            <div
+            <button
               onClick={() => handleSizeSelect(name)}
-              className="w-full cursor-pointer flex justify-between font-cera font-normal text-[15px] leading-[40px]"
+              className={`w-full cursor-pointer flex justify-between text-[15px] leading-[40px]  ${
+                select === name
+                  ? "text-[#46A358] font-bold"
+                  : "text-inherit font-normal"
+              }`}
               key={id}
             >
               <span>{name}</span>
               <span>({getSizeCount(name)})</span>
-            </div>
+            </button>
           ))}
         </div>
       </div>

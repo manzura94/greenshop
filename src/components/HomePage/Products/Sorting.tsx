@@ -1,9 +1,7 @@
 "use client";
-import {
-  setSelectCategory
-} from "@/redux/categorySlice";
-import { plants } from "@/utils/data";
+import { setSelectCategory } from "@/redux/categorySlice";
 import { Button } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -12,16 +10,20 @@ function Sorting() {
   const [activeButton, setActiveButton] = useState("All Plants");
   const dispatch = useDispatch();
 
-  const handleClick = (buttonName: string) => {
+  const handleClick = async (buttonName: string) => {
     setActiveButton(buttonName);
-    if (buttonName === "All Plants") {
-      dispatch(setSelectCategory(plants));
-    }
-    if (buttonName === "New arrivals") {
-      dispatch(setSelectCategory(plants));
-    }
-    if (buttonName === "Sale") {
-      dispatch(setSelectCategory(plants));
+    try {
+      let body = {};
+      if (buttonName === "New arrivals") {
+        body = { isNew: true };
+      } else if (buttonName === "Sale") {
+        body = { sale: true };
+      }
+
+      const res = await axios.post("/api/products/filter", body);
+      dispatch(setSelectCategory(res.data.products));
+    } catch (error) {
+      console.error(error);
     }
   };
 

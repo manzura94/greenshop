@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectToDb } from "../../db";
 
 export async function POST(req: NextRequest) {
-  const { category, size, priceRange } = await req.json();
+  const { category, size, priceRange, isNew, sale } = await req.json();
 
   try {
     const { db } = await connectToDb();
@@ -16,6 +16,8 @@ export async function POST(req: NextRequest) {
         $lte: priceRange[1],
       };
     }
+    if (isNew) filters.isNew = true;
+    if (sale) filters.sale = true;
 
     const products = await db.collection("products").find(filters).toArray();
 
