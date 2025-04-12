@@ -5,6 +5,7 @@ import wishListReducer from "./wishListSlice";
 import productReducer from "./selectSlice";
 import searchReducer from "./searchSlice";
 import categoryReducer from "./categorySlice";
+import paginationReducer from "./paginationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     product: productReducer,
     search: searchReducer,
     category: categoryReducer,
+    pagination: paginationReducer,
   },
 });
 

@@ -75,7 +75,7 @@ db.products.insertMany([
   {
     "id": 7,
     "image": "/images/flower7.png",
-    "name": "Aluminum Plant",
+    "name": "Aluminum Plant helooo",
     "price": 179.00,
     "category": "trerrariums",
     "size": "large",
@@ -85,7 +85,7 @@ db.products.insertMany([
   {
     "id": 8,
     "image": "/images/flower8.png",
-    "name": "Bird's Nest Fern",
+    "name": "Bird's Nest Fern eeeee",
     "price": 99.00,
     "category": "trerrariums",
     "size": "large",

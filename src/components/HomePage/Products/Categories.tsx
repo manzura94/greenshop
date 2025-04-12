@@ -1,6 +1,7 @@
 "use client";
 import CustomButton from "@/components/CustomDesigns/CustomButton";
 import { setSelectCategory } from "@/redux/categorySlice";
+import { setPage, setTotalPages } from "@/redux/paginationSlice";
 import { categories, plants, sizes } from "@/utils/data";
 import { Slider, Typography } from "@mui/material";
 import axios from "axios";
@@ -17,13 +18,22 @@ function Categories() {
     category?: string;
     size?: string;
     priceRange?: number[];
+    page?: number;
+    limit?: number;
   }) => {
     try {
-      const res = await axios.post("/api/products/filter", body);
+      const res = await axios.post("/api/products/filter", {
+        page: 1,
+        limit: 9,
+        ...body,
+      });
 
       const data = res.data;
+      const total = res.data.totalPages;
 
       dispatch(setSelectCategory(data.products));
+      dispatch(setTotalPages(total));
+      dispatch(setPage(1));
     } catch (error) {
       console.error("Error fetching filtered products", error);
     }
@@ -45,21 +55,24 @@ function Categories() {
 
   const handleCategoryChange = (name: string) => {
     const categoryName = name.toLowerCase();
+
     setSelect(name);
     applyFilters({ category: categoryName });
   };
 
   const handlePriceFilterClick = async () => {
-    const body = { priceRange: [30, 200] };
-
-    console.log(price);
     try {
-      const res = await axios.post("/api/products/filter", body);
+      const res = await axios.post("/api/products/filter", {
+        priceRange: price,
+        page: 1,
+        limit: 9,
+      });
 
       const data = res.data;
-      console.log("Filtered by price response:", data);
+      const total = res.data.totalPages;
 
       dispatch(setSelectCategory(data.products));
+      dispatch(setTotalPages(total));
     } catch (error) {
       console.error("Price filter error:", error);
     }

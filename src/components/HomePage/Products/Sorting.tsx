@@ -1,5 +1,6 @@
 "use client";
 import { setSelectCategory } from "@/redux/categorySlice";
+import { setPage } from "@/redux/paginationSlice";
 import { Button } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
@@ -22,6 +23,7 @@ function Sorting() {
 
       const res = await axios.post("/api/products/filter", body);
       dispatch(setSelectCategory(res.data.products));
+      dispatch(setPage(1));
     } catch (error) {
       console.error(error);
     }
