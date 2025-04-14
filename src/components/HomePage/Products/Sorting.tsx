@@ -1,17 +1,19 @@
 "use client";
 import { Button } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentPage, setFilters } from "@/redux/uiSlice";
+import { useAppSelector } from "@/redux/store";
+import { setActiveButton } from "@/redux/activeButtonSlice";
 
 const buttons = ["All Plants", "New arrivals", "Sale"];
 
 function Sorting() {
-  const [activeButton, setActiveButton] = useState("");
+  const activeBtn = useAppSelector((state) => state.activeBtn.activeClass);
   const dispatch = useDispatch();
 
   const handleClick = (buttonName: string) => {
-    setActiveButton(buttonName);
+    dispatch(setActiveButton(buttonName));
 
     if (buttonName === "New arrivals") {
       dispatch(setFilters({ isNew: true }));
@@ -39,10 +41,10 @@ function Sorting() {
               minWidth: "110px",
               paddingLeft: 0,
               paddingRight: 0,
-              fontWeight: activeButton === button ? "600" : "400",
+              fontWeight: activeBtn === button ? "600" : "400",
               transition: "font-weight 0.3s ease, color 0.3s ease",
               textTransform: "Capitalize",
-              color: activeButton === button ? "#46A358" : "inherit",
+              color: activeBtn === button ? "#46A358" : "inherit",
               "&::after": {
                 content: '""',
                 position: "absolute",
@@ -51,9 +53,9 @@ function Sorting() {
                 right: 0,
                 height: "2px",
                 backgroundColor:
-                  activeButton === button ? "#46A358" : "transparent",
+                  activeBtn === button ? "#46A358" : "transparent",
                 transition: "background-color 0.3s ease, transform 0.3s ease",
-                transform: activeButton === button ? "scaleX(1)" : "scaleX(0)",
+                transform: activeBtn === button ? "scaleX(1)" : "scaleX(0)",
               },
             }}
           >

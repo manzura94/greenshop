@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   TextField,
   Box,
@@ -8,10 +8,8 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
-import { setSearchQuery } from "@/redux/searchSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import { plants } from "@/utils/data";
+import axios from "axios";
+import { ListItem } from "@/redux/wishListSlice";
 
 type Props = {
   anchorEl: HTMLElement | null;
@@ -25,31 +23,45 @@ export default function PopperInput({
   setSearchIsClicked,
 }: Props) {
   const [inputValue, setInputValue] = useState("");
-  const dispatch = useDispatch();
-  const searchQuery = useSelector((state: RootState) => state.search.query);
+  const [searchResults, setSearchResults] = useState<ListItem[]>([]);
 
   const handleClose = () => {
     setAnchorEl(null);
     setSearchIsClicked(false);
     setInputValue("");
-    dispatch(setSearchQuery(""));
+    setSearchResults([]);
   };
+
   const handleClear = () => {
     setInputValue("");
-    dispatch(setSearchQuery(""));
+    setSearchResults([]);
   };
 
   const handleOnChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setInputValue(event.target.value);
-    dispatch(setSearchQuery(event.target.value));
   };
-  console.log(searchQuery);
 
-  const searchResults = plants.filter((item) => {
-    return item.name.toLowerCase().includes(searchQuery.toLowerCase());
-  });
+  useEffect(() => {
+    const fetchResults = async () => {
+      if (!inputValue.trim()) {
+        setSearchResults([]);
+        return;
+      }
+      try {
+        const res = await axios.get(`/api/search?query=${inputValue}`);
+        setSearchResults(res.data.results);
+      } catch (err) {
+        console.error("Search API error:", err);
+      }
+    };
+    const delayDebounce = setTimeout(() => {
+      fetchResults();
+    }, 400);
+
+    return () => clearTimeout(delayDebounce);
+  }, [inputValue]);
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popper" : undefined;

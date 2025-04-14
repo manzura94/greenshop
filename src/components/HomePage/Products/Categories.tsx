@@ -1,5 +1,7 @@
 "use client";
 import CustomButton from "@/components/CustomDesigns/CustomButton";
+import { setActiveButton } from "@/redux/activeButtonSlice";
+import { useAppSelector } from "@/redux/store";
 import { setFilters } from "@/redux/uiSlice";
 import { categories, sizes } from "@/utils/data";
 import { Slider, Typography } from "@mui/material";
@@ -11,28 +13,28 @@ import { useDispatch } from "react-redux";
 function Categories() {
   const [price, setPrice] = useState<number[]>([39, 300]);
   const dispatch = useDispatch();
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [selectedSize, setSelectedSize] = useState<string>("");
   const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>(
     {},
   );
+
+  const activeBtn = useAppSelector((state) => state.activeBtn.activeClass);
 
   const handlePriceChange = (_event: Event, newValue: number | number[]) => {
     setPrice(newValue as number[]);
   };
 
   const handleCategoryClick = (name: string) => {
-    setSelectedCategory(name);
-
+    dispatch(setActiveButton(name));
     dispatch(setFilters({ category: name.toLowerCase() }));
   };
 
   const handlePriceFilterClick = () => {
+    dispatch(setActiveButton(""));
     dispatch(setFilters({ priceRange: price }));
   };
 
   const handleSizeClick = (name: string) => {
-    setSelectedSize(name);
+    dispatch(setActiveButton(name));
     dispatch(setFilters({ size: name.toLowerCase() }));
   };
 
@@ -69,7 +71,7 @@ function Categories() {
             <button
               onClick={() => handleCategoryClick(name)}
               className={`cursor-pointer w-full flex items-center justify-between font-cera text-[15px] leading-[40px]  ${
-                selectedCategory === name
+                activeBtn === name
                   ? "text-[#46A358] font-bold"
                   : "text-inherit font-normal"
               }`}
@@ -132,7 +134,7 @@ function Categories() {
             <button
               onClick={() => handleSizeClick(name)}
               className={`w-full cursor-pointer flex justify-between text-[15px] leading-[40px]  ${
-                selectedSize === name
+                activeBtn === name
                   ? "text-[#46A358] font-bold"
                   : "text-inherit font-normal"
               }`}

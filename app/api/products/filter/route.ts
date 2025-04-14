@@ -44,7 +44,6 @@ export async function POST(req: NextRequest) {
       .aggregate([...pipeline, { $count: "count" }])
       .toArray();
     const totalCount = countResult[0]?.count || 0;
-    console.log(Math.ceil(totalCount / limit), "total");
 
     return NextResponse.json({
       products,

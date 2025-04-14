@@ -45,7 +45,7 @@ function Plants() {
   }, [filters, currentPage, dispatch]);
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 min-[870px]:grid-cols-4 lg:grid-cols-3 gap-4 w-full justify-center items-start flex-1">
+    <div className="grid grid-cols-2 sm:grid-cols-3 min-[870px]:grid-cols-4 lg:grid-cols-3 gap-4 w-full justify-center items-start flex-1 min-h-[50vh]">
       {loading ? (
         <Loading />
       ) : products && products.length > 0 ? (
