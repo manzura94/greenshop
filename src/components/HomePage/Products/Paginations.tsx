@@ -3,19 +3,17 @@ import * as React from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { setPage } from "@/redux/paginationSlice";
+import { setCurrentPage } from "@/redux/uiSlice";
 
 export default function Paginations() {
   const dispatch = useAppDispatch();
-  const totalPage = useAppSelector((state) => state.pagination.totalPages);
-  const page = useAppSelector((state) => state.pagination.currentPage);
-  console.log(page);
+  const { totalPages, currentPage } = useAppSelector((state) => state.ui);
 
   const handlePageChange = (
     _event: React.ChangeEvent<unknown>,
     value: number,
   ) => {
-    dispatch(setPage(value));
+    dispatch(setCurrentPage(value));
   };
   return (
     <Stack
@@ -28,8 +26,8 @@ export default function Paginations() {
       }}
     >
       <Pagination
-        count={totalPage}
-        page={page}
+        count={totalPages}
+        page={currentPage}
         onChange={handlePageChange}
         shape="rounded"
         sx={{

@@ -1,87 +1,61 @@
 "use client";
 import CustomButton from "@/components/CustomDesigns/CustomButton";
-import { setSelectCategory } from "@/redux/categorySlice";
-import { setPage, setTotalPages } from "@/redux/paginationSlice";
-import { categories, plants, sizes } from "@/utils/data";
+import { setFilters } from "@/redux/uiSlice";
+import { categories, sizes } from "@/utils/data";
 import { Slider, Typography } from "@mui/material";
 import axios from "axios";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 function Categories() {
   const [price, setPrice] = useState<number[]>([39, 300]);
-  const [select, setSelect] = useState<string>("");
   const dispatch = useDispatch();
-
-  const applyFilters = async (body: {
-    category?: string;
-    size?: string;
-    priceRange?: number[];
-    page?: number;
-    limit?: number;
-  }) => {
-    try {
-      const res = await axios.post("/api/products/filter", {
-        page: 1,
-        limit: 9,
-        ...body,
-      });
-
-      const data = res.data;
-      const total = res.data.totalPages;
-
-      dispatch(setSelectCategory(data.products));
-      dispatch(setTotalPages(total));
-      dispatch(setPage(1));
-    } catch (error) {
-      console.error("Error fetching filtered products", error);
-    }
-  };
-
-  const getSizeCount = (name: string) =>
-    plants.filter((item) => item.size.toLowerCase() === name.toLowerCase())
-      .length;
-
-  const getSortedNumber = (name: string) =>
-    plants.filter((item) => item.category.toLowerCase() === name.toLowerCase())
-      .length;
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>(
+    {},
+  );
 
   const handlePriceChange = (_event: Event, newValue: number | number[]) => {
-    console.log(newValue);
-
     setPrice(newValue as number[]);
   };
 
-  const handleCategoryChange = (name: string) => {
-    const categoryName = name.toLowerCase();
+  const handleCategoryClick = (name: string) => {
+    setSelectedCategory(name);
 
-    setSelect(name);
-    applyFilters({ category: categoryName });
+    dispatch(setFilters({ category: name.toLowerCase() }));
   };
 
-  const handlePriceFilterClick = async () => {
-    try {
-      const res = await axios.post("/api/products/filter", {
-        priceRange: price,
-        page: 1,
-        limit: 9,
-      });
-
-      const data = res.data;
-      const total = res.data.totalPages;
-
-      dispatch(setSelectCategory(data.products));
-      dispatch(setTotalPages(total));
-    } catch (error) {
-      console.error("Price filter error:", error);
-    }
+  const handlePriceFilterClick = () => {
+    dispatch(setFilters({ priceRange: price }));
   };
 
-  const handleSizeSelect = (name: string) => {
-    const sizeName = name.toLowerCase();
-    setSelect(name);
-    applyFilters({ size: sizeName });
+  const handleSizeClick = (name: string) => {
+    setSelectedSize(name);
+    dispatch(setFilters({ size: name.toLowerCase() }));
+  };
+
+  useEffect(() => {
+    const fetchCategoryCounts = async () => {
+      try {
+        const res = await axios.get("/api/products/categories");
+        setCategoryCounts(res.data);
+      } catch (error) {
+        console.error("Error fetching category counts:", error);
+      }
+    };
+    fetchCategoryCounts();
+  }, []);
+
+  const getSortedNumber = (name: string) => {
+    return categoryCounts[name.toLowerCase()] || 0;
+  };
+
+  const getSizeCount = (name: string) => {
+    console.log(name);
+
+    return 0;
   };
 
   return (
@@ -93,9 +67,9 @@ function Categories() {
         <div className="w-full p-[12px] py-0">
           {categories.map(({ name, id }) => (
             <button
-              onClick={() => handleCategoryChange(name)}
+              onClick={() => handleCategoryClick(name)}
               className={`cursor-pointer w-full flex items-center justify-between font-cera text-[15px] leading-[40px]  ${
-                select === name
+                selectedCategory === name
                   ? "text-[#46A358] font-bold"
                   : "text-inherit font-normal"
               }`}
@@ -156,9 +130,9 @@ function Categories() {
         <div className="w-full p-[12px] py-0">
           {sizes.map(({ name, id }) => (
             <button
-              onClick={() => handleSizeSelect(name)}
+              onClick={() => handleSizeClick(name)}
               className={`w-full cursor-pointer flex justify-between text-[15px] leading-[40px]  ${
-                select === name
+                selectedSize === name
                   ? "text-[#46A358] font-bold"
                   : "text-inherit font-normal"
               }`}

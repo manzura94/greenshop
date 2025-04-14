@@ -191,11 +191,11 @@ db.products.insertMany([
     "size": "large",
     "isNew": false,
     "sale": false
-  }
+  },
+ 
 ]);
 
-// db.products.find({});
-// db.products.find({ id: 1 });
+db.products.find({});
 // db.products.findOne({ id: 1 })
 
 

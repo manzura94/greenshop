@@ -1,32 +1,27 @@
 "use client";
-import { setSelectCategory } from "@/redux/categorySlice";
-import { setPage } from "@/redux/paginationSlice";
 import { Button } from "@mui/material";
-import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { setCurrentPage, setFilters } from "@/redux/uiSlice";
 
 const buttons = ["All Plants", "New arrivals", "Sale"];
+
 function Sorting() {
-  const [activeButton, setActiveButton] = useState("All Plants");
+  const [activeButton, setActiveButton] = useState("");
   const dispatch = useDispatch();
 
-  const handleClick = async (buttonName: string) => {
+  const handleClick = (buttonName: string) => {
     setActiveButton(buttonName);
-    try {
-      let body = {};
-      if (buttonName === "New arrivals") {
-        body = { isNew: true };
-      } else if (buttonName === "Sale") {
-        body = { sale: true };
-      }
 
-      const res = await axios.post("/api/products/filter", body);
-      dispatch(setSelectCategory(res.data.products));
-      dispatch(setPage(1));
-    } catch (error) {
-      console.error(error);
+    if (buttonName === "New arrivals") {
+      dispatch(setFilters({ isNew: true }));
+    } else if (buttonName === "Sale") {
+      dispatch(setFilters({ sale: true }));
+    } else if (buttonName === "All Plants") {
+      dispatch(setFilters({}));
     }
+
+    dispatch(setCurrentPage(1));
   };
 
   return (
@@ -42,9 +37,8 @@ function Sorting() {
             sx={{
               position: "relative",
               minWidth: "110px",
-              paddingLeft: 0!,
-              paddingRight: 0!,
-              hover: "none",
+              paddingLeft: 0,
+              paddingRight: 0,
               fontWeight: activeButton === button ? "600" : "400",
               transition: "font-weight 0.3s ease, color 0.3s ease",
               textTransform: "Capitalize",
