@@ -10,6 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 import { ListItem } from "@/redux/wishListSlice";
+import Loading from "../Loading";
 
 type Props = {
   anchorEl: HTMLElement | null;
@@ -24,6 +25,7 @@ export default function PopperInput({
 }: Props) {
   const [inputValue, setInputValue] = useState("");
   const [searchResults, setSearchResults] = useState<ListItem[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -41,6 +43,7 @@ export default function PopperInput({
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setInputValue(event.target.value);
+    setLoading(true);
   };
 
   useEffect(() => {
@@ -55,6 +58,7 @@ export default function PopperInput({
       } catch (err) {
         console.error("Search API error:", err);
       }
+      setLoading(false);
     };
     const delayDebounce = setTimeout(() => {
       fetchResults();
@@ -65,6 +69,7 @@ export default function PopperInput({
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popper" : undefined;
+
   return (
     <Dialog
       open={open}
@@ -125,9 +130,11 @@ export default function PopperInput({
           }}
         />
       </Box>
-      {inputValue.length > 0 && (
+      {inputValue && (
         <Box sx={{ px: 2, py: 1 }}>
-          {searchResults.length > 0 ? (
+          {loading ? (
+            <Loading />
+          ) : searchResults.length > 0 ? (
             searchResults.map((item, index) => (
               <p key={index} className="text cursor-pointer">
                 {item.name}

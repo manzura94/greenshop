@@ -3,7 +3,6 @@ import { Box } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
 
-import { useRouter } from "next/navigation";
 import { useTheme } from "@mui/material/styles";
 import { NavLinks } from "./NavLinks";
 import Logo from "./Logo";
@@ -12,21 +11,8 @@ import MobileMenu from "./MobileMenu";
 import Icons from "./IconsBox";
 
 export const Header = () => {
-  const [activeButton, setActiveButton] = useState("Home");
   const [isMobile, setIsMobile] = useState(false);
-
-  const router = useRouter();
   const theme = useTheme();
-
-  const handleClick = (buttonName: string) => {
-    const page = buttonName.toLowerCase().replace(/\s+/g, "");
-    setActiveButton(buttonName);
-    if (buttonName === "Home") {
-      router.push("/");
-    } else {
-      router.push(`/home/${page}`);
-    }
-  };
 
   useEffect(() => {
     const handleSizing = () => {
@@ -58,8 +44,8 @@ export const Header = () => {
         </>
       ) : (
         <>
-          <Logo setActiveButton={setActiveButton} />
-          <NavLinks activeButton={activeButton} handleClick={handleClick} />
+          <Logo />
+          <NavLinks />
           <Icons />
         </>
       )}

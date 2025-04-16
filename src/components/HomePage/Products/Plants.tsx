@@ -14,8 +14,8 @@ function Plants() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const fetchProducts = async () => {
-      setLoading(true);
       try {
         let res;
         const limit = 9;
