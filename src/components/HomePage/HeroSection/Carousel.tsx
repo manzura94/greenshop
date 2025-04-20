@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 import CustomButton from "@/components/CustomDesigns/CustomButton";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const Carousel = () => {
   const content =
@@ -15,7 +16,11 @@ const Carousel = () => {
 
   const shortContent =
     "We are an online plant shop offering a wide range of cheap";
+  const router = useRouter();
 
+  const handleShopnowClick = () => {
+    router.push("/home/shop");
+  };
   return (
     <div className="w-full relative mx-auto mt-4 overflow-hidden max-w-full min-w-[300px]">
       <Swiper
@@ -39,7 +44,7 @@ const Carousel = () => {
                   {"WELCOME TO GREENSHOP"}
                 </h4>
                 <h1 className="font-cero text-[clamp(24px,5vw,70px)] leading-[1.1] font-black text-[#3d3d3d]">
-                  {"LET'S MAKE A BETTER "}
+                  {"LET'S MAKE A BETTER"}
                   <span className="text-[#4CAF50]">{"PLANET"}</span>
                 </h1>
                 <p className="text-[14px] xs:text-[12px] font-normal xs:leading-[18px] leading-[24px] tracking-[0%] text-[#727272] ">
@@ -52,11 +57,14 @@ const Carousel = () => {
                     fontsize="16px"
                     weight="700"
                     label="SHOP NOW"
-                    onClick={() => "click"}
+                    onClick={handleShopnowClick}
                   />
                 </div>
                 <div className="hidden max-[870px]:block ">
-                  <button className=" font-cera font-bold text-[12px] leading-[14px] tracking-[0%] text-[#46A358] pointer">
+                  <button
+                    className=" font-cera font-bold text-[12px] leading-[14px] tracking-[0%] text-[#46A358] pointer"
+                    onClick={handleShopnowClick}
+                  >
                     SHOP NOW
                   </button>
                 </div>

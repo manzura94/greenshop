@@ -8,11 +8,13 @@ interface CustomButtonProps extends ButtonProps {
   onClick: () => void;
   weight: string;
   fontsize: string;
+  width?: string;
 }
 
 function CustomButton({
   weight,
   fontsize,
+  width,
   label,
   leftIcon,
   rightIcon,
@@ -33,6 +35,7 @@ function CustomButton({
         fontWeight: weight,
         padding: "8px 17px",
         fontSize: fontsize,
+        width: width,
       }}
     >
       {label}

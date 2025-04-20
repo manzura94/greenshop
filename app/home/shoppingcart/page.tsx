@@ -1,11 +1,12 @@
 "use client";
-import Carts from "@/components/ShoppingCart/Carts";
+
+import ShoppingCartItems from "@/components/ShoppingCart/ShoppingCartItems";
 import React from "react";
 
 const ShoppingCart = () => {
   return (
     <div>
-      <Carts />
+      <ShoppingCartItems />
     </div>
   );
 };

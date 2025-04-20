@@ -5,7 +5,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-export default function Carts() {
+export default function ShoppingCartItems() {
   const dispatch = useDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
   useEffect(() => {
