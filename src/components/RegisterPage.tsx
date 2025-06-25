@@ -98,17 +98,16 @@ export const RegisterPage = () => {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
-        error={
-          (email.length > 0 && !isEmailValid(email)) || email.trim() === ""
-        }
+        error={touched.email && (!email || !isEmailValid(email))}
         helperText={
-          touched.email &&
-          (!email
-            ? "Email is required"
-            : !isEmailValid(email)
-              ? "Enter a valid email"
-              : "")
-        }
+    touched.email
+      ? !email
+        ? "Email is required"
+        : !isEmailValid(email)
+        ? "Enter a valid email"
+        : ""
+      : ""
+  }
         sx={inputStyles}
       />
 
@@ -155,17 +154,18 @@ export const RegisterPage = () => {
           setTouched((prev) => ({ ...prev, confirmPassword: true }))
         }
         error={
-          (confirmPassword.length > 0 && confirmPassword !== password) ||
-          confirmPassword.trim() === ""
-        }
-        helperText={
-          touched.confirmPassword &&
-          (!confirmPassword
-            ? "Please confirm your password"
-            : confirmPassword !== password
-              ? "Passwords do not match"
-              : "")
-        }
+    touched.confirmPassword &&
+    (!confirmPassword || confirmPassword !== password)
+  }
+      helperText={
+    touched.confirmPassword
+      ? !confirmPassword
+        ? "Please confirm your password"
+        : confirmPassword !== password
+        ? "Passwords do not match"
+        : ""
+      : ""
+  }
       />
 
       <CustomButton
