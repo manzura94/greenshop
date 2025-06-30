@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { connectToDb } from "../db";
+
+const JWT_SECRET = process.env.JWT_SECRET!;
+
 
 export async function POST(req: NextRequest) {
   try {
@@ -30,7 +34,13 @@ export async function POST(req: NextRequest) {
 
     await db.collection("users").insertOne(newUser);
 
-    return NextResponse.json({ message: "User registered successfully" });
+      const token = jwt.sign(
+      { email: newUser.email, username: newUser.username },
+      JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    return NextResponse.json({ message: "User registered successfully", token });
   } catch (error) {
     console.error("Registration error:", error);
     return new NextResponse("Internal Server Error", { status: 500 });

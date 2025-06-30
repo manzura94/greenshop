@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from "@mui/material";
+import { Button, ButtonProps, CircularProgress } from "@mui/material";
 import React from "react";
 
 interface CustomButtonProps extends ButtonProps {
@@ -9,6 +9,7 @@ interface CustomButtonProps extends ButtonProps {
   weight: string;
   fontsize: string;
   width?: string;
+  loading?: boolean;
 }
 
 function CustomButton({
@@ -18,6 +19,7 @@ function CustomButton({
   label,
   leftIcon,
   rightIcon,
+  loading ,
   onClick,
   ...props
 }: CustomButtonProps) {
@@ -38,7 +40,7 @@ function CustomButton({
         width: width,
       }}
     >
-      {label}
+     {loading ? <CircularProgress size={24} color="inherit" /> : label}
     </Button>
   );
 }

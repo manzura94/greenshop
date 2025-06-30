@@ -12,6 +12,9 @@ import { useState } from "react";
 import CustomButton from "./CustomDesigns/CustomButton";
 import Google from "./icons/Google";
 import Fb from "./icons/Fb";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
 
 export const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,6 +22,9 @@ export const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [regError, setRegError]= useState('');
+  const router = useRouter()
 
   const isEmailValid = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -40,15 +46,55 @@ export const RegisterPage = () => {
     isPasswordValid(password) &&
     password === confirmPassword;
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
+    setRegError('');
     setTouched({
       username: true,
       email: true,
       password: true,
       confirmPassword: true,
     });
+    
     if (!isFormValid) return;
     console.log("register", { username, email, password });
+    setLoading(true)
+
+   try{  
+  const response =  await  axios.post("/api/register", {
+       username,
+       email,
+       password
+      });
+        setUsername("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+    setTouched({
+      username: false,
+      email: false,
+      password: false,
+      confirmPassword: false,
+    });
+
+     const { token } = response.data;
+
+    localStorage.setItem("token", token);
+    alert('thank you for registering!');
+        router.push("/home");
+   console.log('success')
+    } catch(error){
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 409) {
+            setRegError("User already exists. Please try logging in or use a different email.")
+        }else {
+          setRegError(error.response?.data)
+        }
+      }
+    console.log("Error registering user:", error);
+    } finally{
+      setLoading(false)
+    }
+    
   };
 
   const inputStyles = {
@@ -75,6 +121,8 @@ export const RegisterPage = () => {
       <p className="font-cera font-normal text-[#3D3D3D] pb-[14px] text-13px leading-[16px] tracking-normal">
         Enter your email and password to register.
       </p>
+      {regError && <span className="text-[#ff0000]">{regError}</span>}
+
 
       <TextField
         fullWidth
@@ -174,6 +222,7 @@ export const RegisterPage = () => {
         weight="700"
         fontsize="16px"
         onClick={handleRegister}
+        loading={loading}
       />
 
       <Divider sx={{ mb: 3, mt: 3 }}>
