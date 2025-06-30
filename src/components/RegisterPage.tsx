@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import {
   Button,
   Divider,
@@ -15,16 +15,20 @@ import Fb from "./icons/Fb";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+interface ChildProps {
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  setSuccessMessage: Dispatch<SetStateAction<string>>;
+}
 
-export const RegisterPage = () => {
+export const RegisterPage = ({ setOpen, setSuccessMessage }: ChildProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [regError, setRegError]= useState('');
-  const router = useRouter()
+  const [regError, setRegError] = useState("");
+  const router = useRouter();
 
   const isEmailValid = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -47,54 +51,57 @@ export const RegisterPage = () => {
     password === confirmPassword;
 
   const handleRegister = async () => {
-    setRegError('');
+    setRegError("");
     setTouched({
       username: true,
       email: true,
       password: true,
       confirmPassword: true,
     });
-    
+
     if (!isFormValid) return;
     console.log("register", { username, email, password });
-    setLoading(true)
+    setLoading(true);
 
-   try{  
-  const response =  await  axios.post("/api/register", {
-       username,
-       email,
-       password
+    try {
+      const response = await axios.post("/api/register", {
+        username,
+        email,
+        password,
       });
-        setUsername("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-    setTouched({
-      username: false,
-      email: false,
-      password: false,
-      confirmPassword: false,
-    });
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      setTouched({
+        username: false,
+        email: false,
+        password: false,
+        confirmPassword: false,
+      });
 
-     const { token } = response.data;
+      const { token } = response.data;
 
-    localStorage.setItem("token", token);
-    alert('thank you for registering!');
-        router.push("/home");
-   console.log('success')
-    } catch(error){
+      localStorage.setItem("token", token);
+      setSuccessMessage("Thank you for registering!");
+      setTimeout(() => {
+        setOpen(false);
+        router.push("/");
+      }, 2000);
+    } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 409) {
-            setRegError("User already exists. Please try logging in or use a different email.")
-        }else {
-          setRegError(error.response?.data)
+          setRegError(
+            "User already exists. Please try logging in or use a different email.",
+          );
+        } else {
+          setRegError(error.response?.data);
         }
       }
-    console.log("Error registering user:", error);
-    } finally{
-      setLoading(false)
+      console.log("Error registering user:", error);
+    } finally {
+      setLoading(false);
     }
-    
   };
 
   const inputStyles = {
@@ -123,7 +130,6 @@ export const RegisterPage = () => {
       </p>
       {regError && <span className="text-[#ff0000]">{regError}</span>}
 
-
       <TextField
         fullWidth
         variant="outlined"
@@ -148,14 +154,14 @@ export const RegisterPage = () => {
         onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
         error={touched.email && (!email || !isEmailValid(email))}
         helperText={
-    touched.email
-      ? !email
-        ? "Email is required"
-        : !isEmailValid(email)
-        ? "Enter a valid email"
-        : ""
-      : ""
-  }
+          touched.email
+            ? !email
+              ? "Email is required"
+              : !isEmailValid(email)
+                ? "Enter a valid email"
+                : ""
+            : ""
+        }
         sx={inputStyles}
       />
 
@@ -202,18 +208,18 @@ export const RegisterPage = () => {
           setTouched((prev) => ({ ...prev, confirmPassword: true }))
         }
         error={
-    touched.confirmPassword &&
-    (!confirmPassword || confirmPassword !== password)
-  }
-      helperText={
-    touched.confirmPassword
-      ? !confirmPassword
-        ? "Please confirm your password"
-        : confirmPassword !== password
-        ? "Passwords do not match"
-        : ""
-      : ""
-  }
+          touched.confirmPassword &&
+          (!confirmPassword || confirmPassword !== password)
+        }
+        helperText={
+          touched.confirmPassword
+            ? !confirmPassword
+              ? "Please confirm your password"
+              : confirmPassword !== password
+                ? "Passwords do not match"
+                : ""
+            : ""
+        }
       />
 
       <CustomButton

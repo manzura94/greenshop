@@ -9,19 +9,39 @@ import PopperInput from "./PopperInput";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { addToCart } from "@/redux/cartSlice";
+import { logout, login } from "@/redux/authSlice";
 
 export default function IconsBox() {
   const [open, setOpen] = useState<boolean>(false);
   const cartCount = useAppSelector((state) => state.cart.items);
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [searchIsClicked, setSearchIsClicked] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
   const dispatch = useDispatch();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
     setSearchIsClicked(!searchIsClicked);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(logout());
+    router.push("/");
+  };
+
+  useEffect(() => {
+    setHasMounted(true);
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(login());
+    } else {
+      dispatch(logout());
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -36,6 +56,8 @@ export default function IconsBox() {
 
     fetchCart();
   }, [dispatch]);
+
+  if (!hasMounted) return null;
 
   return (
     <div className="flex-center gap-[30px]">
@@ -56,14 +78,26 @@ export default function IconsBox() {
         </Badge>
       </div>
       <div>
-        <CustomButton
-          fontsize="16px"
-          weight="500"
-          label="Login"
-          leftIcon={<LogOut />}
-          onClick={() => setOpen(true)}
-        />
-        <Login open={open} setOpen={setOpen} />
+      {isAuthenticated ? (
+          <CustomButton
+            fontsize="16px"
+            weight="500"
+            label="Logout"
+            leftIcon={<LogOut />}
+            onClick={handleLogout}
+          />
+        ) : (
+          <>
+            <CustomButton
+              fontsize="16px"
+              weight="500"
+              label="Login"
+              leftIcon={<LogOut />}
+              onClick={() => setOpen(true)}
+            />
+            <Login open={open} setOpen={setOpen} />
+          </>
+        )}
       </div>
     </div>
   );

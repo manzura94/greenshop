@@ -6,6 +6,7 @@ import productReducer from "./selectSlice";
 import categoryReducer from "./categorySlice";
 import uiReducer from "./uiSlice";
 import activeButtonReducer from "./activeButtonSlice";
+import authReducer from "./authSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     category: categoryReducer,
     ui: uiReducer,
     activeBtn: activeButtonReducer,
+    auth: authReducer,
   },
 });
 

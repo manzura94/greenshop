@@ -27,7 +27,7 @@ export default function BlogPosts() {
                     alt="flower"
                     src={item.image}
                     fill
-                    style={{ objectFit: 'cover' }}
+                    style={{ objectFit: "cover" }}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="rounded-t-lg"
                   />

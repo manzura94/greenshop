@@ -19,7 +19,7 @@ function CustomButton({
   label,
   leftIcon,
   rightIcon,
-  loading ,
+  loading,
   onClick,
   ...props
 }: CustomButtonProps) {
@@ -40,7 +40,7 @@ function CustomButton({
         width: width,
       }}
     >
-     {loading ? <CircularProgress size={24} color="inherit" /> : label}
+      {loading ? <CircularProgress size={24} color="inherit" /> : label}
     </Button>
   );
 }

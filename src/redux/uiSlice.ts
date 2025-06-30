@@ -1,4 +1,3 @@
-// In your Redux slice for filters & pagination
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

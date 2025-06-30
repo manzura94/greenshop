@@ -6,7 +6,6 @@ import { connectToDb } from "../db";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
-
 export async function POST(req: NextRequest) {
   try {
     const { username, email, password } = await req.json();
@@ -34,13 +33,16 @@ export async function POST(req: NextRequest) {
 
     await db.collection("users").insertOne(newUser);
 
-      const token = jwt.sign(
+    const token = jwt.sign(
       { email: newUser.email, username: newUser.username },
       JWT_SECRET,
-      { expiresIn: "7d" }
+      { expiresIn: "7d" },
     );
 
-    return NextResponse.json({ message: "User registered successfully", token });
+    return NextResponse.json({
+      message: "User registered successfully",
+      token,
+    });
   } catch (error) {
     console.error("Registration error:", error);
     return new NextResponse("Internal Server Error", { status: 500 });

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -12,6 +12,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import PropTypes from "prop-types";
 import { LoginPage } from "../LoginPage";
 import { RegisterPage } from "../RegisterPage";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 
 interface CustomTabPanelProps {
   children?: React.ReactNode;
@@ -53,7 +55,8 @@ export const Login = ({ open, setOpen }: ChildProps) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -88,39 +91,53 @@ export const Login = ({ open, setOpen }: ChildProps) => {
       >
         <CloseIcon />
       </IconButton>
-      <DialogTitle sx={{ padding: "0" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          centered
-          TabIndicatorProps={{ style: { display: "none" } }}
-          sx={{
-            ".MuiTab-root": {
-              fontWeight: 500,
-              fontSize: "20px",
-              lineHeight: "16px",
-              textTransform: "none",
-              minWidth: "100px",
-              color: "#3D3D3D",
-              padding: "0",
-            },
-            ".Mui-selected": {
-              color: "#46A358 !important",
-            },
-          }}
-        >
-          <Tab label="Login" />
-          <Tab label="Register" />
-        </Tabs>
-      </DialogTitle>
-      <DialogContent style={{ overflow: "hidden", padding: "0" }}>
-        <CustomTabPanel value={value} index={0}>
-          <LoginPage />
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          <RegisterPage />
-        </CustomTabPanel>
-      </DialogContent>
+
+      {successMessage ? (
+        <Stack sx={{ width: "100%", mb: 2 }} spacing={2}>
+          <Alert variant="filled" severity="success">
+            {successMessage}
+          </Alert>
+        </Stack>
+      ) : (
+        <>
+          <DialogTitle sx={{ padding: "0" }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              centered
+              TabIndicatorProps={{ style: { display: "none" } }}
+              sx={{
+                ".MuiTab-root": {
+                  fontWeight: 500,
+                  fontSize: "20px",
+                  lineHeight: "16px",
+                  textTransform: "none",
+                  minWidth: "100px",
+                  color: "#3D3D3D",
+                  padding: "0",
+                },
+                ".Mui-selected": {
+                  color: "#46A358 !important",
+                },
+              }}
+            >
+              <Tab label="Login" />
+              <Tab label="Register" />
+            </Tabs>
+          </DialogTitle>
+          <DialogContent style={{ overflow: "hidden", padding: "0" }}>
+            <CustomTabPanel value={value} index={0}>
+              <LoginPage />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+              <RegisterPage
+                setOpen={setOpen}
+                setSuccessMessage={setSuccessMessage}
+              />
+            </CustomTabPanel>
+          </DialogContent>
+        </>
+      )}
     </Dialog>
   );
 };
