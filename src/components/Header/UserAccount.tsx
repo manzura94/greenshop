@@ -1,13 +1,27 @@
 "use client";
 
 import React, { useState } from "react";
-import { Avatar, Box, Menu, MenuItem, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Menu,
+  MenuItem,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
+} from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { logout } from "@/redux/authSlice";
 
 export default function UserAccount() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -20,10 +34,19 @@ export default function UserAccount() {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
+    setConfirmOpen(true); 
+  };
+
+  const handleLogoutConfirm = () => {
     dispatch(logout());
     router.push("/");
+    setConfirmOpen(false);
     handleMenuClose();
+  };
+
+  const handleLogoutCancel = () => {
+    setConfirmOpen(false);
   };
 
   return (
@@ -52,8 +75,24 @@ export default function UserAccount() {
         >
           Profile
         </MenuItem>
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
       </Menu>
+      <Dialog open={confirmOpen} onClose={handleLogoutCancel}>
+        <DialogTitle>Confirm Logout</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to logout?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleLogoutCancel} color="success" >
+            No
+          </Button>
+          <Button onClick={handleLogoutConfirm} color="success" variant="contained" autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

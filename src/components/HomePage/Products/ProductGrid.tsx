@@ -9,6 +9,7 @@ import { addToList } from "@/redux/wishListSlice";
 import { useRouter } from "next/navigation";
 import { setSelectedProduct } from "@/redux/selectSlice";
 import axios from "axios";
+import parseJwt from "@/utils/parseJwt";
 
 interface PlantProps {
   id: number;
@@ -25,7 +26,7 @@ interface ProductGridProps {
   products: PlantProps[];
 }
 
-const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
+const ProductGrid = ({ products }: ProductGridProps) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const cartItems = useAppSelector((state) => state.cart.items);
@@ -38,13 +39,17 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   ) => {
     e.stopPropagation();
     const isInCart = cartItems.some((item) => item.id === product.id);
+    const token = localStorage.getItem('token');
+    const decoded = token ? parseJwt(token) : null;
+    const userid = decoded?.id
+
 
     try {
       const res = isInCart
-        ? await axios.delete("/api/users/1/cart?id=1", {
+        ? await axios.delete(`/api/users/${userid}/cart?id=${userid}`, {
             data: { productId: product.id },
           })
-        : await axios.post("/api/users/1/cart?id=1", {
+        : await axios.post(`/api/users/${userid}/cart?id=${userid}`, {
             productId: product.id,
           });
 
@@ -67,13 +72,16 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   ) => {
     e.stopPropagation();
     const isInList = wishListItems.some((item) => item.id === plant.id);
+    const token = localStorage.getItem("token");
+    const decoded = token ? parseJwt(token) : null;
+    const userid = decoded?.id
 
     try {
       const res = isInList
-        ? await axios.delete("/api/users/1/wishlist?id=1", {
+        ? await axios.delete(`/api/users/${userid}/wishlist?id=${userid}`, {
             data: { productId: plant.id },
           })
-        : await axios.post("/api/users/1/wishlist?id=1", {
+        : await axios.post(`/api/users/${userid}/wishlist?id=${userid}`, {
             productId: plant.id,
           });
 
