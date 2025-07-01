@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import {
   Button,
   Divider,
@@ -10,21 +10,73 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import CustomButton from "./CustomDesigns/CustomButton";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 import Google from "./icons/Google";
 import Fb from "./icons/Fb";
+import axios from "axios";
+import parseJwt from "@/utils/parseJwt";
+import { login } from "@/redux/authSlice";
 
-export const LoginPage = () => {
+interface ChildProps {
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  setSuccessMessage: Dispatch<SetStateAction<string>>;
+}
+
+export const LoginPage = ({ setOpen, setSuccessMessage }: ChildProps) => {
+  const [emailOrUsername, setEmailOrUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const handleLogin = async () => {
+    setErrorMessage("");
+    if (!emailOrUsername || !password) {
+      setErrorMessage("Please fill in all fields.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await axios.post("/api/login", {
+        emailOrUsername,
+        password,
+      });
+      const { token } = response.data;
+      localStorage.setItem("token", token);
+      const decoded = parseJwt(token);
+      setSuccessMessage(`Welcome back ${decoded?.username}`);
+      setTimeout(() => {
+        setOpen(false);
+        router.push("/");
+        dispatch(login({ username: decoded?.username }));
+      }, 2000);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setErrorMessage(error.response?.data || "Login failed");
+      } else {
+        setErrorMessage("Something went wrong");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="w-full ">
       <p className="font-cera font-normal text-[#3D3D3D] pb-[14px] text-13px leading-[16px] tracking-normal">
         Enter your username and password to login.
       </p>
-
+      {errorMessage && <span className="text-[#ff0000]">{errorMessage}</span>}
       <TextField
         fullWidth
         variant="outlined"
         placeholder="almamun_uxui@outlook.com"
+        onChange={(e) => setEmailOrUsername(e.target.value)}
         sx={{
           marginBottom: "40px",
           height: "40px",
@@ -51,7 +103,8 @@ export const LoginPage = () => {
         type={showPassword ? "text" : "password"}
         variant="outlined"
         placeholder="Password"
-        value={""}
+        onChange={(e) => setPassword(e.target.value)}
+        value={password}
         sx={{
           marginBottom: "25px",
           height: "40px",
@@ -93,7 +146,8 @@ export const LoginPage = () => {
         label="Login"
         weight="700"
         fontsize="16px"
-        onClick={() => console.log("login")}
+        onClick={handleLogin}
+        loading={loading}
       />
 
       <Divider sx={{ mb: 3, mt: 3 }}>

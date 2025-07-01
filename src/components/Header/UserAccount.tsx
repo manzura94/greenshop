@@ -29,12 +29,12 @@ export default function UserAccount() {
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Avatar
-        sx={{ cursor: "pointer", width: 48, height: 48 }}
+        sx={{ cursor: "pointer", width: 40, height: 40 }}
         onClick={handleAvatarClick}
       >
-        {user?.username ? user.username.charAt(0).toUpperCase() : "U"}
+        <Avatar src="/broken-image.jpg" />
       </Avatar>
-      <Typography variant="caption" sx={{ mt: 0.5 }}>
+      <Typography variant="caption" sx={{ mt: 0, lineHeight: 1, fontSize: 13 }}>
         {user?.username || "User"}
       </Typography>
       <Menu

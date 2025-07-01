@@ -127,7 +127,10 @@ export const Login = ({ open, setOpen }: ChildProps) => {
           </DialogTitle>
           <DialogContent style={{ overflow: "hidden", padding: "0" }}>
             <CustomTabPanel value={value} index={0}>
-              <LoginPage />
+              <LoginPage
+                setOpen={setOpen}
+                setSuccessMessage={setSuccessMessage}
+              />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
               <RegisterPage

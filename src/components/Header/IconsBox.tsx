@@ -28,11 +28,6 @@ export default function IconsBox() {
     setSearchIsClicked(!searchIsClicked);
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
-    router.push("/");
-  };
-
   useEffect(() => {
     setHasMounted(true);
 
@@ -81,7 +76,7 @@ export default function IconsBox() {
       </div>
       <div>
         {isAuthenticated ? (
-          <UserAccount/>
+          <UserAccount />
         ) : (
           <>
             <CustomButton
