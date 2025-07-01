@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { addToCart } from "@/redux/cartSlice";
 import { logout, login } from "@/redux/authSlice";
+import parseJwt from "@/utils/parseJwt";
+import UserAccount from "./UserAccount";
 
 export default function IconsBox() {
   const [open, setOpen] = useState<boolean>(false);
@@ -27,7 +29,6 @@ export default function IconsBox() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
     dispatch(logout());
     router.push("/");
   };
@@ -37,7 +38,8 @@ export default function IconsBox() {
 
     const token = localStorage.getItem("token");
     if (token) {
-      dispatch(login());
+      const decoded = parseJwt(token);
+      dispatch(login({ username: decoded?.username }));
     } else {
       dispatch(logout());
     }
@@ -78,14 +80,8 @@ export default function IconsBox() {
         </Badge>
       </div>
       <div>
-      {isAuthenticated ? (
-          <CustomButton
-            fontsize="16px"
-            weight="500"
-            label="Logout"
-            leftIcon={<LogOut />}
-            onClick={handleLogout}
-          />
+        {isAuthenticated ? (
+          <UserAccount/>
         ) : (
           <>
             <CustomButton

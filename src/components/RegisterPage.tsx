@@ -14,6 +14,9 @@ import Google from "./icons/Google";
 import Fb from "./icons/Fb";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { login } from "@/redux/authSlice";
+import parseJwt from "@/utils/parseJwt";
 
 interface ChildProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -29,6 +32,7 @@ export const RegisterPage = ({ setOpen, setSuccessMessage }: ChildProps) => {
   const [loading, setLoading] = useState(false);
   const [regError, setRegError] = useState("");
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const isEmailValid = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -87,6 +91,8 @@ export const RegisterPage = ({ setOpen, setSuccessMessage }: ChildProps) => {
       setTimeout(() => {
         setOpen(false);
         router.push("/");
+        const decoded = parseJwt(token);
+        dispatch(login({ username: decoded?.username }));
       }, 2000);
     } catch (error) {
       if (axios.isAxiosError(error)) {
