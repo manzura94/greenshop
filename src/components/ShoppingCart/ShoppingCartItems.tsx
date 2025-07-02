@@ -1,5 +1,5 @@
 "use client";
-import { addToCart, setCart } from "@/redux/cartSlice";
+import { setCart } from "@/redux/cartSlice";
 import { useAppSelector } from "@/redux/store";
 import parseJwt from "@/utils/parseJwt";
 import axios from "axios";
