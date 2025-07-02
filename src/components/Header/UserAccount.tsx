@@ -35,7 +35,7 @@ export default function UserAccount() {
   };
 
   const handleLogoutClick = () => {
-    setConfirmOpen(true); 
+    setConfirmOpen(true);
   };
 
   const handleLogoutConfirm = () => {
@@ -85,10 +85,15 @@ export default function UserAccount() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleLogoutCancel} color="success" >
+          <Button onClick={handleLogoutCancel} color="success">
             No
           </Button>
-          <Button onClick={handleLogoutConfirm} color="success" variant="contained" autoFocus>
+          <Button
+            onClick={handleLogoutConfirm}
+            color="success"
+            variant="contained"
+            autoFocus
+          >
             Yes
           </Button>
         </DialogActions>

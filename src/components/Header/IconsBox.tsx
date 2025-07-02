@@ -42,8 +42,11 @@ export default function IconsBox() {
 
   useEffect(() => {
     const fetchCart = async () => {
+      const token = localStorage.getItem("token");
+      const decoded = token ? parseJwt(token) : null;
+      const userid = decoded?.id
       try {
-        const res = await axios.get("/api/users/1/cart?id=1");
+        const res = await axios.get(`/api/users/${userid}/cart?id=${userid}`);
         const data = res.data;
         dispatch(addToCart(data));
       } catch (err) {
@@ -93,3 +96,4 @@ export default function IconsBox() {
     </div>
   );
 }
+

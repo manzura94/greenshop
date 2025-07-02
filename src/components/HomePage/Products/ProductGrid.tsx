@@ -32,6 +32,7 @@ const ProductGrid = ({ products }: ProductGridProps) => {
   const cartItems = useAppSelector((state) => state.cart.items);
   const wishListItems = useAppSelector((state) => state.wishList.items);
   const [searchIsClicked, setSearchIsClicked] = useState(false);
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   const handleAddToCartClick = async (
     e: MouseEvent<HTMLDivElement>,
@@ -39,10 +40,14 @@ const ProductGrid = ({ products }: ProductGridProps) => {
   ) => {
     e.stopPropagation();
     const isInCart = cartItems.some((item) => item.id === product.id);
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     const decoded = token ? parseJwt(token) : null;
-    const userid = decoded?.id
+    const userid = decoded?.id;
 
+    if (!isAuthenticated) {
+      alert("you need to sign in first");
+      return;
+    }
 
     try {
       const res = isInCart
@@ -71,10 +76,16 @@ const ProductGrid = ({ products }: ProductGridProps) => {
     plant: PlantProps,
   ) => {
     e.stopPropagation();
+
+    if (!isAuthenticated) {
+      alert("you need to sign in first");
+      return;
+    }
+
     const isInList = wishListItems.some((item) => item.id === plant.id);
     const token = localStorage.getItem("token");
     const decoded = token ? parseJwt(token) : null;
-    const userid = decoded?.id
+    const userid = decoded?.id;
 
     try {
       const res = isInList
