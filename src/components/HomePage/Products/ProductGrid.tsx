@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Like, SearchIcon, ShoppingCartIcon } from "@/components/icons";
 import Likegreen from "@/components/icons/Likegreen";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { addToCart } from "@/redux/cartSlice";
+import { setCart } from "@/redux/cartSlice";
 import { addToList } from "@/redux/wishListSlice";
 import { useRouter } from "next/navigation";
 import { setSelectedProduct } from "@/redux/selectSlice";
@@ -39,7 +39,7 @@ const ProductGrid = ({ products }: ProductGridProps) => {
     product: PlantProps,
   ) => {
     e.stopPropagation();
-    const isInCart = cartItems.some((item) => item.id === product.id);
+
     const token = localStorage.getItem("token");
     const decoded = token ? parseJwt(token) : null;
     const userid = decoded?.id;
@@ -50,15 +50,18 @@ const ProductGrid = ({ products }: ProductGridProps) => {
     }
 
     try {
-      const res = isInCart
-        ? await axios.delete(`/api/users/${userid}/cart?id=${userid}`, {
-            data: { productId: product.id },
-          })
-        : await axios.post(`/api/users/${userid}/cart?id=${userid}`, {
-            productId: product.id,
-          });
+      const res = cartItems.some((item) => item.id === product.id)
+      ? await axios.delete(
+          `/api/users/${userid}/cart?id=${userid}`,
+          { data: { productId: product.id } }
+        )
+      : await axios.post(
+          `/api/users/${userid}/cart?id=${userid}`,
+          { productId: product.id }
+        );
 
-      dispatch(addToCart(res.data));
+    dispatch(setCart(res.data));
+      
     } catch (error) {
       console.error("Cart update failed:", error);
     }
@@ -96,7 +99,7 @@ const ProductGrid = ({ products }: ProductGridProps) => {
             productId: plant.id,
           });
 
-      dispatch(addToList(Array.isArray(res.data) ? res.data : [res.data]));
+      dispatch(addToList(res.data));
     } catch (error) {
       console.error("Wishlist update failed:", error);
     }

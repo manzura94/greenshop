@@ -17,6 +17,8 @@ import {
 import { useRouter } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { logout } from "@/redux/authSlice";
+import { clearWishlist } from "@/redux/wishListSlice";
+import { clearCart } from "@/redux/cartSlice";
 
 export default function UserAccount() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -40,6 +42,8 @@ export default function UserAccount() {
 
   const handleLogoutConfirm = () => {
     dispatch(logout());
+    dispatch(clearWishlist());
+    dispatch(clearCart());
     router.push("/");
     setConfirmOpen(false);
     handleMenuClose();
