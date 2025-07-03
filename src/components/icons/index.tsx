@@ -12,6 +12,7 @@ import SearchIcon from "./SearchIcon";
 import ShoppingCartIcon from "./ShoppingCartIcon";
 import Twitter from "./Twitter";
 import YouTube from "./YouTube";
+import Delete from "./Delete";
 
 export {
   Instagram,
@@ -28,4 +29,5 @@ export {
   Message,
   Calling,
   Location,
+  Delete,
 };

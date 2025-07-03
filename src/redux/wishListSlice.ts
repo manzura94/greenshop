@@ -26,7 +26,7 @@ const wishListSlice = createSlice({
     addToList: (state, action: PayloadAction<ListItem>) => {
       state.items.push(action.payload);
     },
-    setWishlist: (state, action: PayloadAction<ListItem[]>)=>{
+    setWishlist: (state, action: PayloadAction<ListItem[]>) => {
       state.items = action.payload;
     },
     clearWishlist: (state) => {

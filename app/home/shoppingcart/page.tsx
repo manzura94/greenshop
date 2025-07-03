@@ -5,7 +5,7 @@ import React from "react";
 
 const ShoppingCart = () => {
   return (
-    <div>
+    <div className="w-full flex">
       <ShoppingCartItems />
     </div>
   );

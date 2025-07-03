@@ -23,12 +23,11 @@ export default function IconsBox() {
   const [searchIsClicked, setSearchIsClicked] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const dispatch = useDispatch();
-   console.log(cartCount)
+  console.log(cartCount);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
     setSearchIsClicked(!searchIsClicked);
   };
-
 
   useEffect(() => {
     setHasMounted(true);
@@ -49,15 +48,13 @@ export default function IconsBox() {
       const token = localStorage.getItem("token");
       const decoded = token ? parseJwt(token) : null;
       const userId = decoded?.id;
-      console.log('heyyyyyyy')
+      console.log("heyyyyyyy");
       if (!userId) {
         dispatch(clearCart());
         return;
       }
       try {
-        const res = await axios.get(
-          `/api/users/${userId}/cart?id=${userId}`
-        );
+        const res = await axios.get(`/api/users/${userId}/cart?id=${userId}`);
         dispatch(setCart(res.data));
       } catch (err) {
         console.error("Failed to fetch cart:", err);
@@ -70,7 +67,6 @@ export default function IconsBox() {
       dispatch(clearCart());
     }
   }, [dispatch, isAuthenticated]);
-
 
   if (!hasMounted) return null;
 

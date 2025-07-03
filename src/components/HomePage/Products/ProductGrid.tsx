@@ -51,17 +51,14 @@ const ProductGrid = ({ products }: ProductGridProps) => {
 
     try {
       const res = cartItems.some((item) => item.id === product.id)
-      ? await axios.delete(
-          `/api/users/${userid}/cart?id=${userid}`,
-          { data: { productId: product.id } }
-        )
-      : await axios.post(
-          `/api/users/${userid}/cart?id=${userid}`,
-          { productId: product.id }
-        );
+        ? await axios.delete(`/api/users/${userid}/cart?id=${userid}`, {
+            data: { productId: product.id },
+          })
+        : await axios.post(`/api/users/${userid}/cart?id=${userid}`, {
+            productId: product.id,
+          });
 
-    dispatch(setCart(res.data));
-      
+      dispatch(setCart(res.data));
     } catch (error) {
       console.error("Cart update failed:", error);
     }

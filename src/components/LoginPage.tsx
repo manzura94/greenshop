@@ -20,7 +20,6 @@ import { login } from "@/redux/authSlice";
 import { setCart } from "@/redux/cartSlice";
 import { setWishlist } from "@/redux/wishListSlice";
 
-
 interface ChildProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   setSuccessMessage: Dispatch<SetStateAction<string>>;
@@ -62,11 +61,10 @@ export const LoginPage = ({ setOpen, setSuccessMessage }: ChildProps) => {
         axios.get(`/api/users/${userId}/cart`),
         axios.get(`/api/users/${userId}/wishlist`),
       ]);
-  
+
       dispatch(setCart(cartRes.data));
       dispatch(setWishlist(wishlistRes.data));
 
-   
       setSuccessMessage(`Welcome back ${decoded?.username}`);
       setTimeout(() => {
         setOpen(false);
@@ -75,7 +73,7 @@ export const LoginPage = ({ setOpen, setSuccessMessage }: ChildProps) => {
       }, 2000);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        setErrorMessage( "Login failed");
+        setErrorMessage("Login failed");
       } else {
         setErrorMessage("Something went wrong");
       }
