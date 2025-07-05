@@ -23,7 +23,7 @@ export default function IconsBox() {
   const [searchIsClicked, setSearchIsClicked] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const dispatch = useDispatch();
-  console.log(cartCount);
+  console.log(cartCount, "iconbox");
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
     setSearchIsClicked(!searchIsClicked);
