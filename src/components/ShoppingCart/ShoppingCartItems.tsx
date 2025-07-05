@@ -2,19 +2,29 @@
 import {
   decrementQuantity,
   incrementQuantity,
+  removeFromCart,
   setCart,
 } from "@/redux/cartSlice";
 import { useAppSelector } from "@/redux/store";
 import parseJwt from "@/utils/parseJwt";
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Delete } from "../icons";
 import Image from "next/image";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 
 export default function ShoppingCartItems() {
   const dispatch = useDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
+  const [open, setOpen] = useState(false);
 
   const increment = (id: number) => {
     dispatch(incrementQuantity(id));
@@ -22,6 +32,25 @@ export default function ShoppingCartItems() {
 
   const decrement = (id: number) => {
     dispatch(decrementQuantity(id));
+  };
+
+  const handleDelete = () => {
+    setOpen(true);
+  };
+
+  const handleDeleteConfirm =  async (id: number) => {
+    setOpen(false);
+    dispatch(removeFromCart(id));
+    const token = localStorage.getItem("token");
+    const decoded = token ? parseJwt(token) : null;
+    const userid = decoded?.id;
+    await axios.delete(`/api/users/${userid}/cart?id=${userid}`, {
+      data: { productId: id },
+    })
+  };
+
+  const handleDeleteCancel = () => {
+    setOpen(false);
   };
 
   const subtotal = cartItems.reduce((total, item) => {
@@ -116,9 +145,38 @@ export default function ShoppingCartItems() {
                     $
                     {(parseFloat(item.price) * (item.quantity ?? 1)).toFixed(2)}
                   </p>
-                  <div className="mx-4 cursor-pointer">
+                  <div className="mx-4 cursor-pointer" onClick={handleDelete}>
                     <Delete />
                   </div>
+                  <Dialog open={open}
+                   onClose={handleDeleteCancel}
+                   BackdropProps={{
+                    style: {
+                      backgroundColor: "rgba(0, 0, 0, 0.1)", 
+                    },
+                  }}
+                  >
+                  <DialogTitle>Confirm delete</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        Are you sure you want to delete this product from your
+                        cart?
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleDeleteCancel} color="success">
+                        No
+                      </Button>
+                      <Button
+                        onClick={() => handleDeleteConfirm(item.id)}
+                        color="success"
+                        variant="contained"
+                        autoFocus
+                      >
+                        Yes
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
                 </div>
               </div>
             ))}
