@@ -60,7 +60,7 @@ export default function ShoppingCartItems() {
   }, 0);
 
   const shipping = 16.0;
-  const total = subtotal + shipping;
+  const total = subtotal > 0 && subtotal + shipping;
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -211,7 +211,7 @@ export default function ShoppingCartItems() {
           <div className="flex justify-between mb-4">
             <span className="text-[#3D3D3D] font-semibold">Total</span>
             <span className="text-[#46A358] font-semibold text-lg">
-              ${total.toFixed(2)}
+              ${total ? total.toFixed(2) : 0.00}
             </span>
           </div>
           <button className="w-full bg-[#46A358] text-white py-3 mb-4">
