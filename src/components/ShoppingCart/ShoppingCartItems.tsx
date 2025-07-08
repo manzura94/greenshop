@@ -22,12 +22,19 @@ import {
 } from "@mui/material";
 import Loading from "../Loading";
 
+type RelatedProduct = {
+  id: number;
+  name: string;
+};
+
 export default function ShoppingCartItems() {
   const dispatch = useDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
   const [open, setOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [relatedProducts, setRelatedProducts] = useState<RelatedProduct[]>([]);
+  const cartProductIds = cartItems.map((item) => item.id);
 
   const increment = async (id: number) => {
     dispatch(incrementQuantity(id));
@@ -84,6 +91,8 @@ export default function ShoppingCartItems() {
   const shipping = 16.0;
   const total = subtotal > 0 ? subtotal + shipping : 0;
 
+
+
   useEffect(() => {
     setLoading(true);
     const fetchCart = async () => {
@@ -107,6 +116,23 @@ export default function ShoppingCartItems() {
 
     fetchCart();
   }, [dispatch]);
+
+  useEffect(() => {
+    const fetchRelatedProducts = async () => {
+      if (cartProductIds.length === 0) return;
+  
+      try {
+        const res = await axios.post("/api/products/related", {
+          cartProductIds,
+        });
+        setRelatedProducts(res.data);
+      } catch (err) {
+        console.error("Failed to fetch related products:", err);
+      }
+    };
+  
+    fetchRelatedProducts();
+  }, [cartProductIds]);
 
   return (
     <div className="w-full px-4 py-8 flex-col">
@@ -259,6 +285,11 @@ export default function ShoppingCartItems() {
           </p>
         </div>
       </div>
+      {relatedProducts.length > 0 && <div>
+        {relatedProducts.map((item=> (
+          <p key={item.id}>{item.name}</p>
+        )))}
+        </div>}
     </div>
   );
 }
