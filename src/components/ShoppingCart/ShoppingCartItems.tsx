@@ -26,12 +26,29 @@ export default function ShoppingCartItems() {
   const cartItems = useAppSelector((state) => state.cart.items);
   const [open, setOpen] = useState(false);
 
-  const increment = (id: number) => {
+
+  const increment = async (id: number) => {
     dispatch(incrementQuantity(id));
+    const token = localStorage.getItem("token");
+    const decoded = token ? parseJwt(token) : null;
+    const userid = decoded?.id;
+  
+    await axios.post(`/api/users/${userid}/cart?id=${userid}`, {
+      productId: id,
+      action: "increment", 
+    });
   };
 
-  const decrement = (id: number) => {
+  const decrement = async (id: number) => {
     dispatch(decrementQuantity(id));
+    const token = localStorage.getItem("token");
+    const decoded = token ? parseJwt(token) : null;
+    const userid = decoded?.id;
+  
+    await axios.post(`/api/users/${userid}/cart?id=${userid}`, {
+      productId: id,
+      action: "decrement",
+    });
   };
 
   const handleDelete = () => {
@@ -60,7 +77,7 @@ export default function ShoppingCartItems() {
   }, 0);
 
   const shipping = 16.0;
-  const total = subtotal > 0 && subtotal + shipping;
+  const total = subtotal > 0 ? subtotal + shipping : 0;
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -108,7 +125,6 @@ export default function ShoppingCartItems() {
                   <Image
                     src={item.image}
                     alt="flower"
-                    // fill
                     className="mix-blend-multiply object-contain"
                     width={70}
                     height={50}
