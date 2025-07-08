@@ -22,22 +22,24 @@ export async function GET(req: NextRequest) {
     return NextResponse.json([]);
   }
 
-  const productIds = cartItems.map((item:{productId: number}) => item.productId);
+  const productIds = cartItems.map(
+    (item: { productId: number }) => item.productId,
+  );
 
   const cartProducts = await db
     .collection("products")
     .find({ id: { $in: productIds } })
     .toArray();
 
-    const result = cartProducts.map(product => {
-      const cartItem = cartItems.find(
-        (item:{productId: number}) => item.productId === product.id
-      );
-      return {
-        ...product,
-        quantity: cartItem?.quantity ?? 1
-      };
-    });
+  const result = cartProducts.map((product) => {
+    const cartItem = cartItems.find(
+      (item: { productId: number }) => item.productId === product.id,
+    );
+    return {
+      ...product,
+      quantity: cartItem?.quantity ?? 1,
+    };
+  });
   return NextResponse.json(result);
 }
 
@@ -56,53 +58,60 @@ export async function POST(req: NextRequest) {
   const carts = db.collection<Cart>("carts");
 
   if (action === "increment") {
-    const cart = await carts.findOne({ userId, "cartItems.productId": productId });
-  
-    if (cart) {
+    const cart = await carts.findOne({
+      userId,
+      "cartItems.productId": productId,
+    });
 
+    if (cart) {
       await carts.updateOne(
         { userId, "cartItems.productId": productId },
-        { $inc: { "cartItems.$.quantity": 1 } }
+        { $inc: { "cartItems.$.quantity": 1 } },
       );
     } else {
-
       await carts.updateOne(
         { userId },
         { $push: { cartItems: { productId, quantity: 1 } } },
-        { upsert: true }
+        { upsert: true },
       );
     }
   } else if (action === "decrement") {
-    const cart = await carts.findOne({ userId, "cartItems.productId": productId });
-    const currentQuantity = cart?.cartItems.find(i => i.productId === productId)?.quantity || 1;
-  
+    const cart = await carts.findOne({
+      userId,
+      "cartItems.productId": productId,
+    });
+    const currentQuantity =
+      cart?.cartItems.find((i) => i.productId === productId)?.quantity || 1;
+
     if (currentQuantity > 1) {
       await carts.updateOne(
         { userId, "cartItems.productId": productId },
-        { $inc: { "cartItems.$.quantity": -1 } }
+        { $inc: { "cartItems.$.quantity": -1 } },
       );
     } else {
       await carts.updateOne(
         { userId },
-        { $pull: { cartItems: { productId } } }
+        { $pull: { cartItems: { productId } } },
       );
     }
   } else {
-    const cart = await carts.findOne({ userId, "cartItems.productId": productId });
+    const cart = await carts.findOne({
+      userId,
+      "cartItems.productId": productId,
+    });
     if (cart) {
       await carts.updateOne(
         { userId, "cartItems.productId": productId },
-        { $inc: { "cartItems.$.quantity": 1 } }
+        { $inc: { "cartItems.$.quantity": 1 } },
       );
     } else {
       await carts.updateOne(
         { userId },
         { $push: { cartItems: { productId, quantity: 1 } } },
-        { upsert: true }
+        { upsert: true },
       );
     }
   }
-
 
   const userCart = await carts.findOne({ userId });
   const productIds = userCart?.cartItems.map((i) => i.productId) ?? [];
@@ -114,7 +123,7 @@ export async function POST(req: NextRequest) {
 
   const result = cartProducts.map((product) => {
     const cartItem = userCart?.cartItems.find(
-      (i) => i.productId === product.id
+      (i) => i.productId === product.id,
     );
     return {
       ...product,
@@ -133,37 +142,34 @@ export async function DELETE(req: NextRequest) {
   const productId = body.productId;
 
   if (!userId || !productId) {
-    return NextResponse.json({ error: "Missing userId or productId"}, { status: 400 });
+    return NextResponse.json(
+      { error: "Missing userId or productId" },
+      { status: 400 },
+    );
   }
 
   const carts = db.collection<Cart>("carts");
 
-  await carts.updateOne(
-    { userId },
-    { $pull: { cartItems: { productId } } }
-  );
+  await carts.updateOne({ userId }, { $pull: { cartItems: { productId } } });
 
   const userCart = await carts.findOne({ userId });
+  const productIds = userCart?.cartItems.map((i) => i.productId) ?? [];
 
-  if (!userCart || userCart.cartItems.length === 0) {
-    return NextResponse.json([]);
-  }
-  const productIds = userCart.cartItems.map(item => item.productId) ?? [];
   const cartProducts = await db
     .collection("products")
     .find({ id: { $in: productIds } })
     .toArray();
 
-    const result = cartProducts.map(product => {
-      const cartItem = userCart.cartItems.find(
-        (item: { productId: number; quantity: number }) => item.productId === product.id
-      );
-      return {
-        ...product,
-        quantity: cartItem?.quantity ?? 1
-      };
-    });
-
+  const result = cartProducts.map((product) => {
+    const cartItem = userCart?.cartItems.find(
+      (item: { productId: number; quantity: number }) =>
+        item.productId === product.id,
+    );
+    return {
+      ...product,
+      quantity: cartItem?.quantity ?? 1,
+    };
+  });
 
   return NextResponse.json(result);
 }
