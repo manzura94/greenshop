@@ -1,4 +1,4 @@
-// app/api/related-products/route.ts
+
 
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDb } from "../../db";
