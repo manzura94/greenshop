@@ -1,22 +1,16 @@
-
-
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDb } from "../../db";
 
-
 export async function POST(req: NextRequest) {
   const { db } = await connectToDb();
-  const { cartProductIds } = await req.json(); 
-
+  const { cartProductIds } = await req.json();
 
   const productsInCart = await db
     .collection("products")
     .find({ id: { $in: cartProductIds } })
     .toArray();
 
-
   const categories = [...new Set(productsInCart.map((p) => p.category))];
-
 
   const related = await db
     .collection("products")
@@ -29,5 +23,3 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json(related);
 }
-
-  

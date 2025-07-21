@@ -21,10 +21,13 @@ import {
 } from "@mui/material";
 import Loading from "../Loading";
 import { useParseJwt } from "@/hooks/useParseJwt";
+import RelatedProductsCarousel from "./RelatedProductsCarousel";
 
 type RelatedProduct = {
   id: number;
   name: string;
+  price: number;
+  image: string;
 };
 
 export default function ShoppingCartItems() {
@@ -35,7 +38,6 @@ export default function ShoppingCartItems() {
   const [loading, setLoading] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState<RelatedProduct[]>([]);
   const userid = useParseJwt();
-
 
   const increment = async (id: number) => {
     dispatch(incrementQuantity(id));
@@ -83,13 +85,11 @@ export default function ShoppingCartItems() {
   const shipping = 16.0;
   const total = subtotal > 0 ? subtotal + shipping : 0;
 
-
   useEffect(() => {
     setLoading(true);
     const fetchCart = async () => {
-
       if (!userid) {
-        setLoading(false)
+        setLoading(false);
         return;
       }
 
@@ -109,7 +109,7 @@ export default function ShoppingCartItems() {
   useEffect(() => {
     const fetchRelatedProducts = async () => {
       if (cartItems.length === 0) return;
-  
+
       try {
         const res = await axios.post("/api/products/related", {
           cartProductIds: cartItems.map((item) => item.id),
@@ -119,12 +119,11 @@ export default function ShoppingCartItems() {
         console.error("Failed to fetch related products:", err);
       }
     };
-  
+
     fetchRelatedProducts();
   }, [cartItems]);
 
- 
-
+  console.log(relatedProducts, "related");
 
   return (
     <div className="w-full px-4 py-8 flex-col">
@@ -134,10 +133,9 @@ export default function ShoppingCartItems() {
       <div className="flex w-full gap-20">
         {loading ? (
           <div className="flex justify-center items-center w-[70%]">
-          <Loading />
+            <Loading />
           </div>
-        ) :  cartItems && cartItems.length > 0 ? (
-         
+        ) : cartItems && cartItems.length > 0 ? (
           <div className="flex  w-[70%]">
             <div className="w-full">
               <div className="flex justify-between border-b border-[#46A358] pb-2 mb-2 text-[#3D3D3D] font-cera font-medium text-[16px] leading-[16px] tracking-[0%]">
@@ -202,17 +200,16 @@ export default function ShoppingCartItems() {
                     >
                       <Delete />
                     </div>
-                   
                   </div>
                 </div>
               ))}
             </div>
-          </div>) : (
-            <div className="flex justify-center items-center w-[70%]">
-
+          </div>
+        ) : (
+          <div className="flex justify-center items-center w-[70%]">
             <p>No item found</p>
-            </div>
-          )}
+          </div>
+        )}
         <div className="w-full md:w-1/3 mt-8 md:mt-0">
           <h2 className="font-semibold text-[#3D3D3D] mb-2">Cart Totals</h2>
           <p className="text-[#3D3D3D] mb-1">Coupon Apply</p>
@@ -253,41 +250,36 @@ export default function ShoppingCartItems() {
           </p>
         </div>
         <Dialog
-                      open={open}
-                      onClose={handleDeleteCancel}
-                      BackdropProps={{
-                        style: {
-                          backgroundColor: "rgba(0, 0, 0, 0.1)",
-                        },
-                      }}
-                    >
-                      <DialogTitle>Confirm delete</DialogTitle>
-                      <DialogContent>
-                        <DialogContentText>
-                          Are you sure you want to delete this product from your
-                          cart?
-                        </DialogContentText>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={handleDeleteCancel} color="success">
-                          No
-                        </Button>
-                        <Button
-                          onClick={handleDeleteConfirm}
-                          color="success"
-                          variant="contained"
-                          autoFocus
-                        >
-                          Yes
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
+          open={open}
+          onClose={handleDeleteCancel}
+          BackdropProps={{
+            style: {
+              backgroundColor: "rgba(0, 0, 0, 0.1)",
+            },
+          }}
+        >
+          <DialogTitle>Confirm delete</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete this product from your cart?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDeleteCancel} color="success">
+              No
+            </Button>
+            <Button
+              onClick={handleDeleteConfirm}
+              color="success"
+              variant="contained"
+              autoFocus
+            >
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
-      {relatedProducts.length > 0 && <div>
-        {relatedProducts.map((item=> (
-          <p key={item.id}>{item.name}</p>
-        )))}
-        </div>}
+      <RelatedProductsCarousel relatedProducts={relatedProducts} />
     </div>
   );
 }
