@@ -22,6 +22,7 @@ import {
 import Loading from "../Loading";
 import { useParseJwt } from "@/hooks/useParseJwt";
 import RelatedProductsCarousel from "./RelatedProductsCarousel";
+import CustomButton from "../CustomDesigns/CustomButton";
 
 type RelatedProduct = {
   id: number;
@@ -130,13 +131,13 @@ export default function ShoppingCartItems() {
       <div className="text-[15px] font-bold text-[#3D3D3D] mb-8">
         Home / Shop / Shopping Cart
       </div>
-      <div className="flex w-full gap-20">
+      <div className="flex w-full gap-20 flex-col lg:flex-row">
         {loading ? (
-          <div className="flex justify-center items-center w-[70%]">
+          <div className="flex justify-center items-center w-full lg:w-[70%]">
             <Loading />
           </div>
         ) : cartItems && cartItems.length > 0 ? (
-          <div className="flex  w-[70%]">
+          <div className="flex w-full lg:w-[70%]">
             <div className="w-full">
               <div className="flex justify-between border-b border-[#46A358] pb-2 mb-2 text-[#3D3D3D] font-cera font-medium text-[16px] leading-[16px] tracking-[0%]">
                 <span className="w-1/3">Products</span>
@@ -206,11 +207,11 @@ export default function ShoppingCartItems() {
             </div>
           </div>
         ) : (
-          <div className="flex justify-center items-center w-[70%]">
+          <div className="flex justify-center items-center w-full lg:w-[70%]">
             <p>No item found</p>
           </div>
         )}
-        <div className="w-full md:w-1/3 mt-8 md:mt-0">
+        <div className="w-full lg:w-1/3 mt-8 md:mt-0">
           <h2 className="font-semibold text-[#3D3D3D] mb-2">Cart Totals</h2>
           <p className="text-[#3D3D3D] mb-1">Coupon Apply</p>
           <div className="flex mb-4">
@@ -242,9 +243,14 @@ export default function ShoppingCartItems() {
               ${total ? total.toFixed(2) : 0.0}
             </span>
           </div>
-          <button className="w-full bg-[#46A358] text-white py-3 mb-4">
-            Proceed To Checkout
-          </button>
+          <div className="flex justify-center items-center mb-2 mt-2">
+            <CustomButton
+              label="Proceed To Checkout"
+              weight="700"
+              fontsize="15"
+              onClick={()=>console.log('pay')}
+            />
+          </div>
           <p className="text-[#46A358] text-center cursor-pointer">
             Continue Shopping
           </p>

@@ -19,7 +19,7 @@ export async function connectToDb() {
   await client.connect();
 
   cachedClient = client;
-  cachedDb = client.db("greenshop-nextjs");
+  cachedDb = client.db("greenshop");
 
   return { client, db: cachedDb };
 }
